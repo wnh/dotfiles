@@ -17,6 +17,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
 
 
 Plugin 'chriskempson/base16-vim'
