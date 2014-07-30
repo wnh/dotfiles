@@ -1,3 +1,12 @@
 [user]
 	name = Will Harding
 	email = harding.will@gmail.com
+[alias]
+	st = status
+	ci = commit
+	d = diff
+	co = checkout
+[push]
+	default = simple
+[core]
+	excludesfile = ~/.gitignore
