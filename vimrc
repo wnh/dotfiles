@@ -15,9 +15,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
+Plugin 'Raimondi/delimitMate'
 
 
 Plugin 'chriskempson/base16-vim'
@@ -25,6 +27,7 @@ Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+filetype plugin on
 
 let g:airline_left_sep  = ' '
 let g:airline_right_sep = ' '
