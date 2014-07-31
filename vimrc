@@ -73,3 +73,6 @@ endfunction!
 
 command Trail call ClearTrailingWhitespace()
 
+
+
+set previewheight=25
