@@ -76,3 +76,6 @@ command Trail call ClearTrailingWhitespace()
 
 
 set previewheight=25
+command Gci Gcommit
+
+
