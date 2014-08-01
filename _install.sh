@@ -19,7 +19,6 @@ for src in *; do
   fi
 
   # Link new guys into place.
-  echo "Linking $dst"
-  #ln -s "$src" "$dst"
-  echo 'ln ' "$src" "$dst"
+  echo "Linking $src -> $dst"
+  ln -s "$src" "$dst"
 done
