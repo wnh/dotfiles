@@ -6,6 +6,7 @@
 	ci = commit
 	d = diff
 	co = checkout
+  llog = log --decorate --graph --branches
 [push]
 	default = simple
 [core]

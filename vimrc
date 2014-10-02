@@ -20,6 +20,10 @@ Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
+Plugin 'vim-scripts/dbext.vim'
+
+Plugin 'joonty/vdebug'
+Plugin 'majutsushi/tagbar'
 
 
 Plugin 'chriskempson/base16-vim'
@@ -49,10 +53,11 @@ au BufNewFile,BufRead *.inc     set filetype=php
 au BufNewFile,BufRead *.test    set filetype=php
 
 
-au FileType css setlocal tabstop=2 shiftwidth=2 expandtab list
-au FileType php setlocal tabstop=2 shiftwidth=2 expandtab
+au FileType css setlocal list
 au FileType php setlocal makeprg=php\ -l\ %
 au FileType php setlocal errorformat=%m\ in\ %f\ on\ line\ %l,%-GErrors\ parsing\ %f,%-G
+
+set tabstop=2 shiftwidth=2 expandtab
 
 set grepprg=ack
 

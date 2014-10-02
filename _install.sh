@@ -4,7 +4,8 @@ IGNORE="_install.sh"
 echo "Installing dot files..."
 
 for src in *; do
-  dst="~/.$src"
+  dst="${HOME}/.$src"
+  full_src="${HOME}/.dotfiles/$src"
 
 
   if echo "$IGNORE" | grep -q "$src"; then
@@ -20,5 +21,5 @@ for src in *; do
 
   # Link new guys into place.
   echo "Linking $src -> $dst"
-  ln -s "$src" "$dst"
+  ln -s "$full_src" "$dst"
 done

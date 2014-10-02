@@ -1,0 +1,9 @@
+
+
+today() { date +'%Y%m%d'; }
+now() { date +"%Y%m%d-%H%M"; }
+nownow() { date +"%Y%m%d-%H%M%S"; }
+
+
+alias errorlog='tail -f /var/log/apache2/error.log | sed s/$/\\n/' 
+
