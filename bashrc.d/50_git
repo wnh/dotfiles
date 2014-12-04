@@ -1,4 +1,8 @@
 
-alias g=git
+alias g='git'
 alias gd="git diff"
 alias gst="git status"
+
+# setup auto complete for git aliases
+source /usr/share/bash-completion/completions/git
+complete -o default -o nospace -F _git g

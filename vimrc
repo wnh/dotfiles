@@ -29,6 +29,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
 
+Plugin 'closetag.vim'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 filetype plugin on
@@ -52,6 +54,7 @@ au BufNewFile,BufRead *.module  set filetype=php
 au BufNewFile,BufRead *.inc     set filetype=php
 au BufNewFile,BufRead *.test    set filetype=php
 
+au BufNewFile,BufRead Guardfile set filetype=ruby
 
 au FileType css setlocal list
 au FileType php setlocal makeprg=php\ -l\ %
@@ -83,4 +86,10 @@ command Trail call ClearTrailingWhitespace()
 set previewheight=25
 command Gci Gcommit
 
+nnoremap <F2> :set paste!<CR>
+
+let g:vdebug_options= {
+\    "break_on_open" : 1,
+\    "watch_window_style" : 'compact',
+\}
 
