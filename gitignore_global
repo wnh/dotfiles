@@ -1,0 +1,7 @@
+
+.*.swp
+.ackrc
+.htaccess-local
+sites/all/settings.php
+wwwroot/sites/*.vm
+

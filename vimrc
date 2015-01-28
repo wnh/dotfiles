@@ -24,7 +24,10 @@ Plugin 'vim-scripts/dbext.vim'
 
 Plugin 'joonty/vdebug'
 Plugin 'majutsushi/tagbar'
+Plugin 'SerVer/ultisnips'
+Plugin 'Shougo/unite.vim'
 
+Plugin 'ervandew/supertab'
 
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -59,9 +62,9 @@ au BufNewFile,BufRead Guardfile set filetype=ruby
 au FileType css setlocal list
 au FileType php setlocal makeprg=php\ -l\ %
 au FileType php setlocal errorformat=%m\ in\ %f\ on\ line\ %l,%-GErrors\ parsing\ %f,%-G
+au FileType php setlocal list
 
 set tabstop=2 shiftwidth=2 expandtab
-
 set grepprg=ack
 
 
@@ -92,4 +95,11 @@ let g:vdebug_options= {
 \    "break_on_open" : 1,
 \    "watch_window_style" : 'compact',
 \}
+
+function! GrepCurrentWord()
+  let current = expand('<cword>')
+  execute ":grep -Q '". current . "'"
+endfunction!
+nnoremap <F8> :call GrepCurrentWord()<CR>
+
 

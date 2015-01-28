@@ -7,9 +7,10 @@
 	d = diff
 	co = checkout
   llog = log --decorate --graph --branches
+  web = instaweb --httpd=webrick
 [push]
 	default = simple
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore_global
 [merge]
 	tool = tkdiff
