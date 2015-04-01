@@ -1,8 +1,9 @@
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
-set t_Co=256
 set timeoutlen=50
+set t_Co=256
+let base16colorspace=256
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -21,13 +22,18 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
 Plugin 'vim-scripts/dbext.vim'
+"Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'joonty/vdebug'
 Plugin 'majutsushi/tagbar'
-Plugin 'SerVer/ultisnips'
 Plugin 'Shougo/unite.vim'
+Plugin 'tpope/vim-dispatch'
 
 Plugin 'ervandew/supertab'
+Plugin 'SerVer/ultisnips'
+
+"Plugin 'terryma/vim-multiple-cursors'
+Plugin 'mattn/emmet-vim'
 
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -47,9 +53,17 @@ let g:airline_theme='base16'
 set background=dark laststatus=2
 
 command W w
+command Vsp vsp
+command Sp sp
 
-set number
-set nowrap
+" set tab completion mode
+" 1st -> complete to the longest match
+" 2nd -> show a list of all completions
+" 3rd -> start cycling full completions
+set wildmode=longest,list,full
+set wildmenu
+
+set number nowrap cursorline
 set listchars=tab:»\ ,trail:·
 
 au BufNewFile,BufRead *.install set filetype=php
@@ -63,7 +77,9 @@ au FileType css setlocal list
 au FileType php setlocal makeprg=php\ -l\ %
 au FileType php setlocal errorformat=%m\ in\ %f\ on\ line\ %l,%-GErrors\ parsing\ %f,%-G
 au FileType php setlocal list
+au FileType make setlocal list noexpandtab tabstop=4
 
+set hlsearch
 set tabstop=2 shiftwidth=2 expandtab
 set grepprg=ack
 
@@ -85,7 +101,7 @@ endfunction!
 command Trail call ClearTrailingWhitespace()
 
 
-
+" Quickfix window's default height
 set previewheight=25
 command Gci Gcommit
 
@@ -102,4 +118,23 @@ function! GrepCurrentWord()
 endfunction!
 nnoremap <F8> :call GrepCurrentWord()<CR>
 
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+
+let g:vdebug_options['server'] = "0.0.0.0"
+let g:vdebug_options['path_maps'] = {
+\    '/home/acro/accounts/barcodestalk/barcodestalk/wwwroot': '/home/wharding/work/barcodestalk/barcodestalk/wwwroot'
+\}
+
+
+let g:tagbar_type_php  = {
+  \ 'ctagstype' : 'php',
+  \ 'kinds'     : [
+    \ 'i:interfaces',
+    \ 'c:classes',
+    \ 'd:constant definitions',
+    \ 'f:functions',
+    \ 'j:javascript functions:1'
+  \ ]
+\ }
 
