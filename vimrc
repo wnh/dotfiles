@@ -5,6 +5,9 @@ set timeoutlen=50
 set t_Co=256
 let base16colorspace=256
 
+set encoding=utf-8            " The encoding displayed.
+setglobal fileencoding=utf-8  " The encoding written to file.
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -55,6 +58,9 @@ set background=dark laststatus=2
 command W w
 command Vsp vsp
 command Sp sp
+
+" Emmet makes :E ambigious, put it back
+command E Explore
 
 " set tab completion mode
 " 1st -> complete to the longest match
