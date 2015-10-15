@@ -90,6 +90,7 @@ au BufNewFile,BufRead *.inc     set filetype=php
 au BufNewFile,BufRead *.test    set filetype=php
 
 au BufRead,BufNewFile *.go set filetype=go
+au BufNewFile,BufRead *.less    set filetype=less
 
 au BufNewFile,BufRead Guardfile set filetype=ruby
 
