@@ -49,7 +49,6 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'groenewege/vim-less'
 Plugin 'mitechie/govim'
 Plugin 'raichoo/haskell-vim'
-Plugin 'digitaltoad/vim-jade'
 Plugin 'rust-lang/rust.vim'
 
 Plugin 'closetag.vim'
@@ -158,10 +157,6 @@ let g:tagbar_type_php  = {
     \ 'j:javascript functions:1'
   \ ]
 \ }
-
-
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules)$'
-
 
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
