@@ -27,18 +27,22 @@ Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
 Plugin 'vim-scripts/dbext.vim'
 "Plugin 'Valloric/YouCompleteMe'
-Plugin 'jgdavey/tslime.vim'
+Plugin 'mileszs/ack.vim'
 
 Plugin 'joonty/vdebug'
 Plugin 'majutsushi/tagbar'
 Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-dispatch'
 
+Plugin 'scrooloose/syntastic'
+
 Plugin 'ervandew/supertab'
 "Plugin 'SerVer/ultisnips'
 
 "Plugin 'terryma/vim-multiple-cursors'
 Plugin 'mattn/emmet-vim'
+
+Plugin 'digitaltoad/vim-jade'
 
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -61,6 +65,8 @@ colorscheme base16-default
 let g:airline_theme='base16'
 
 set background=dark laststatus=2
+
+set diffopt+=vertical
 
 command W w
 command Vsp vsp
@@ -152,4 +158,11 @@ let g:tagbar_type_php  = {
     \ 'j:javascript functions:1'
   \ ]
 \ }
+
+
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|node_modules)$'
+
+
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 

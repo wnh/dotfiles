@@ -20,6 +20,7 @@ autoload -U colors && colors
 autoload -U promptinit && promptinit
 
 export TERM=xterm-256color
+export EDITOR=vim
 source ~/.dotfiles/base16-shell/base16-default.dark.sh
 
 parse_git_branch() {
@@ -42,7 +43,7 @@ now() { date +"%Y%m%d-%H%M"; }
 nownow() { date +"%Y%m%d-%H%M%S"; }
 
 
-
+export DEFAULT_PROMPT="$PROMPT"
 PROMPT="%{$fg[green]%}\$(swd) %{$fg[cyan]%}\$(gitst)%{$fg[green]%}%#%{$reset_color%} "
 # RPROMPT="%{$fg[blue]%}\$(gitst)%{$reset_color%}"
 
