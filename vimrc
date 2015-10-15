@@ -4,6 +4,7 @@ filetype off                  " required
 set timeoutlen=50
 set t_Co=256
 let base16colorspace=256
+syntax on 
 
 set encoding=utf-8            " The encoding displayed.
 setglobal fileencoding=utf-8  " The encoding written to file.
@@ -26,6 +27,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
 Plugin 'vim-scripts/dbext.vim'
 "Plugin 'Valloric/YouCompleteMe'
+Plugin 'jgdavey/tslime.vim'
 
 Plugin 'joonty/vdebug'
 Plugin 'majutsushi/tagbar'
@@ -33,13 +35,18 @@ Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-dispatch'
 
 Plugin 'ervandew/supertab'
-Plugin 'SerVer/ultisnips'
+"Plugin 'SerVer/ultisnips'
 
 "Plugin 'terryma/vim-multiple-cursors'
 Plugin 'mattn/emmet-vim'
 
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'groenewege/vim-less'
+Plugin 'mitechie/govim'
+Plugin 'raichoo/haskell-vim'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'rust-lang/rust.vim'
 
 Plugin 'closetag.vim'
 
@@ -77,6 +84,8 @@ au BufNewFile,BufRead *.module  set filetype=php
 au BufNewFile,BufRead *.inc     set filetype=php
 au BufNewFile,BufRead *.test    set filetype=php
 
+au BufRead,BufNewFile *.go set filetype=go
+
 au BufNewFile,BufRead Guardfile set filetype=ruby
 
 au FileType css setlocal list
@@ -84,6 +93,9 @@ au FileType php setlocal makeprg=php\ -l\ %
 au FileType php setlocal errorformat=%m\ in\ %f\ on\ line\ %l,%-GErrors\ parsing\ %f,%-G
 au FileType php setlocal list
 au FileType make setlocal list noexpandtab tabstop=4
+
+au FileType javascript setlocal tabstop=4 shiftwidth=4 expandtab
+au BufRead,BufNewFile *.jade set filetype=jade
 
 set hlsearch
 set tabstop=2 shiftwidth=2 expandtab
@@ -126,12 +138,9 @@ nnoremap <F8> :call GrepCurrentWord()<CR>
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
-
-let g:vdebug_options['server'] = "0.0.0.0"
-let g:vdebug_options['path_maps'] = {
-\    '/home/acro/accounts/barcodestalk/barcodestalk/wwwroot': '/home/wharding/work/barcodestalk/barcodestalk/wwwroot'
-\}
-
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|node_modules)$',
+  \ }
 
 let g:tagbar_type_php  = {
   \ 'ctagstype' : 'php',
