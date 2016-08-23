@@ -9,6 +9,8 @@ syntax on
 set encoding=utf-8            " The encoding displayed.
 setglobal fileencoding=utf-8  " The encoding written to file.
 
+set cscopetag
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -22,6 +24,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'scrooloose/nerdcommenter'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'Raimondi/delimitMate'
@@ -37,7 +40,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'scrooloose/syntastic'
 
 Plugin 'ervandew/supertab'
-"Plugin 'SerVer/ultisnips'
+Plugin 'SerVer/ultisnips'
 
 "Plugin 'terryma/vim-multiple-cursors'
 Plugin 'mattn/emmet-vim'
@@ -47,11 +50,16 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'groenewege/vim-less'
-Plugin 'mitechie/govim'
+"Plugin 'mitechie/govim'
+Plugin 'fatih/vim-go'
+
 Plugin 'raichoo/haskell-vim'
 Plugin 'rust-lang/rust.vim'
 
 Plugin 'closetag.vim'
+
+Plugin 'hashivim/vim-terraform'
+
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -84,13 +92,13 @@ set wildmenu
 set number nowrap cursorline
 set listchars=tab:»\ ,trail:·
 
-au BufNewFile,BufRead *.install set filetype=php
-au BufNewFile,BufRead *.module  set filetype=php
-au BufNewFile,BufRead *.inc     set filetype=php
-au BufNewFile,BufRead *.test    set filetype=php
+au BufNewFile,BufRead *.tf      set filetype=terraform
+au BufNewFile,BufRead *.tfstate set filetype=terraform
 
-au BufRead,BufNewFile *.go set filetype=go
+au BufRead,BufNewFile *.go      set filetype=go
 au BufNewFile,BufRead *.less    set filetype=less
+
+let g:go_fmt_command = "goimports"
 
 au BufNewFile,BufRead Guardfile set filetype=ruby
 
@@ -144,6 +152,9 @@ nnoremap <F8> :call GrepCurrentWord()<CR>
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
+
+let NERDTreeIgnore=['\.pyc$', '\~$']
+
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn)|node_modules)$',
   \ }
@@ -161,4 +172,7 @@ let g:tagbar_type_php  = {
 
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+
+set exrc
+set secure
 
