@@ -27,7 +27,7 @@ parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\[\1\]/'
 }
 
-alias ls='ls --color=auto'
+alias ls='ls -G'
 alias ll='ls -l'
 
 alias g=git
@@ -39,11 +39,38 @@ alias errorlog='tail -f /var/log/apache2/error.log | sed s/$/\\n/'
 alias dtags=drupaltags
 
 today() { date +'%Y%m%d'; }
-now() { date +"%Y%m%d-%H%M"; }
-nownow() { date +"%Y%m%d-%H%M%S"; }
+now() { date +"%Y%m%dT%H%M"; }
+nownow() { date +"%Y%m%dT%H%M%S"; }
 
 
 export DEFAULT_PROMPT="$PROMPT"
 PROMPT="%{$fg[green]%}\$(swd) %{$fg[cyan]%}\$(gitst)%{$fg[green]%}%#%{$reset_color%} "
 # RPROMPT="%{$fg[blue]%}\$(gitst)%{$reset_color%}"
 
+export PATH=/Users/wharding/.homebrew/bin:$PATH:~/bin
+export MANPATH=/Users/wharding/.homebrew/share/man:$MANPATH
+
+export GOPATH=$HOME/src/gocode
+export PATH=$PATH:$GOPATH/bin
+
+# setup nvm 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+
+# THIS IS THE GREATEST!!!
+export CDPATH=.:~:$HOME/work:$GOPATH/src/github.com
+
+
+# If there is no docker host configured make an attempt
+dm() {
+  DOCKER_RUNNING=$(docker-machine ls | awk 'NR > 1 && $1 == "default" {print $4}')
+  if [[ "$DOCKER_RUNNING" == "Stopped" ]]; then
+    docker-machine start default
+  fi
+  eval $(docker-machine env)
+}
+
+scratch() {
+  docker run --rm -it -v $(pwd):/host wnh/scratch:latest /bin/bash
+}
