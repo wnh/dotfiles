@@ -6,4 +6,5 @@ sites/all/settings.php
 wwwroot/sites/*.vm
 Guardfile
 tags
+.DS_Store
 

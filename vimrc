@@ -4,7 +4,7 @@ filetype off                  " required
 set timeoutlen=50
 set t_Co=256
 let base16colorspace=256
-syntax on 
+syntax on
 
 set encoding=utf-8            " The encoding displayed.
 setglobal fileencoding=utf-8  " The encoding written to file.
@@ -43,6 +43,9 @@ Plugin 'ervandew/supertab'
 Plugin 'mattn/emmet-vim'
 
 Plugin 'digitaltoad/vim-jade'
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 Plugin 'chriskempson/base16-vim'
 Plugin 'altercation/vim-colors-solarized'
@@ -103,6 +106,9 @@ au FileType make setlocal list noexpandtab tabstop=4
 au FileType javascript setlocal tabstop=4 shiftwidth=4 expandtab
 au BufRead,BufNewFile *.jade set filetype=jade
 
+au FileType go setlocal tabstop=4 shiftwidth=4 noexpandtab
+au FileType python setlocal tabstop=4 shiftwidth=4 noexpandtab
+
 set hlsearch
 set tabstop=2 shiftwidth=2 expandtab
 set grepprg=ack
@@ -158,6 +164,8 @@ let g:tagbar_type_php  = {
     \ 'j:javascript functions:1'
   \ ]
 \ }
+
+let g:syntastic_disabled_filetypes=['go']
 
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
