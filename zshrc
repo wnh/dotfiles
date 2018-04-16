@@ -3,6 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory autocd beep extendedglob nomatch PROMPT_SUBST
+unsetopt AUTO_CD
 bindkey -e
 
 bindkey '\e[A' history-beginning-search-backward
@@ -29,6 +30,7 @@ parse_git_branch() {
 
 alias ls='ls -G'
 alias ll='ls -l'
+alias lh='ls -lh'
 
 alias g=git
 alias gd='git diff'
@@ -59,7 +61,7 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # THIS IS THE GREATEST!!!
-export CDPATH=.:~:$HOME/work:$GOPATH/src/github.com
+export CDPATH=.:$HOME/work:$GOPATH/src/github.com:$HOME/src/github.com
 
 
 # If there is no docker host configured make an attempt
@@ -74,3 +76,15 @@ dm() {
 scratch() {
   docker run --rm -it -v $(pwd):/host wnh/scratch:latest /bin/bash
 }
+
+ip() {
+  ifconfig en0 inet | tail -n 1 | awk '{print $2}'
+}
+
+
+export ANDROID_HOME="/Users/wharding/android-tools"
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export GETGIT_ROOT=$HOME/src
+
+
+#export PATH=$PATH:/Users/wharding/src/github.com/wnh/acstatus/ENV/bin

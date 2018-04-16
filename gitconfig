@@ -2,12 +2,12 @@
 	name = Will Harding
 	email = wharding@avalanche.ca
 [alias]
-	st = status
-	ci = commit
-	d = diff
-	co = checkout
+	st   = status
+	ci   = commit
+	d    = diff
+	co   = checkout
   llog = log --decorate --graph --branches
-  web = instaweb --httpd=webrick
+  web  = instaweb --httpd=webrick
 [push]
 	default = simple
 [core]
@@ -15,3 +15,9 @@
 	quotepath = false
 [merge]
 	tool = tkdiff
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
