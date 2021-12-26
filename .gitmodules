@@ -82,9 +82,6 @@
 [submodule "vim/bundle/vim-tmux-navigator"]
 	path = vim/bundle/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "vim/bundle/ensime-vim"]
-	path = vim/bundle/ensime-vim
-	url = https://github.com/ensime/ensime-vim.git
 [submodule "vim/bundle/elm-vim"]
 	path = vim/bundle/elm-vim
 	url = https://github.com/ElmCast/elm-vim
