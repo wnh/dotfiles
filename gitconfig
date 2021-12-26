@@ -1,6 +1,6 @@
 [user]
 	name = Will Harding
-	email = wharding@avalanche.ca
+	email = harding.will@gmail.com
 [alias]
 	st   = status
 	ci   = commit
@@ -13,11 +13,3 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	quotepath = false
-[merge]
-	tool = tkdiff
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
