@@ -19,9 +19,6 @@
 [submodule "vim/bundle/govim"]
 	path = vim/bundle/govim
 	url = https://github.com/mitechie/govim.git
-[submodule "vim/bundle/haskell-vim"]
-	path = vim/bundle/haskell-vim
-	url = https://github.com/raichoo/haskell-vim.git
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
