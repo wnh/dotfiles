@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/wharding/work/ac-incidents/incidents'
-let g:netrw_dirhist_2='/Users/wharding/work/ac-incidents'
-let g:netrw_dirhist_3='/Users/wharding/work/ac-incidents/incidents'
-let g:netrw_dirhist_4='/Users/wharding/work/ac-incidents'
-let g:netrw_dirhist_5='/Volumes/IncidentDB'
-let g:netrw_dirhist_6='/Users/wharding/work/ac-incidents/accidents/models'
