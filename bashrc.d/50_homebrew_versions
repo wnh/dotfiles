@@ -1,5 +1,0 @@
-
-HB="/Users/wharding/.homebrew/bin"
-
-alias emacs="$HB/emacs"
-alias vim="$HB/vim"
