@@ -1,4 +1,4 @@
-# Lines configured by zsh-newuser-install
+. $HOME/.profile 
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -22,7 +22,7 @@ autoload -U promptinit && promptinit
 
 export TERM=xterm-256color
 export EDITOR=vim
-source ~/.dotfiles/base16-shell/base16-default.dark.sh
+#source ~/.dotfiles/base16-shell/base16-default.dark.sh
 
 parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\[\1\]/'
@@ -45,15 +45,17 @@ now() { date +"%Y%m%dT%H%M"; }
 nownow() { date +"%Y%m%dT%H%M%S"; }
 
 
+guix_flag() {
+if [ -n "$GUIX_ENVIRONMENT" ] ; then echo "[G]"; fi
+}
 export DEFAULT_PROMPT="$PROMPT"
-PROMPT="%{$fg[green]%}\$(swd) %{$fg[cyan]%}\$(gitst)%{$fg[green]%}%#%{$reset_color%} "
+PROMPT="%{$fg[green]%}\$(swd) %{$fg[cyan]%}\$(gitst)%{$fg[green]%}\$(guix_flag)%#%{$reset_color%} "
 # RPROMPT="%{$fg[blue]%}\$(gitst)%{$reset_color%}"
 
-export PATH=/Users/wharding/.homebrew/bin:$PATH:~/bin
+export PATH=$PATH:~/.bin:~/local/bin
 export MANPATH=/Users/wharding/.homebrew/share/man:$MANPATH
 
-export GOPATH=$HOME/src/gocode
-export PATH=$PATH:$GOPATH/bin
+export PATH="$PATH:/opt/go/bin"
 
 # setup nvm 
 export NVM_DIR="$HOME/.nvm"
@@ -82,9 +84,28 @@ ip() {
 }
 
 
-export ANDROID_HOME="/Users/wharding/android-tools"
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export GETGIT_ROOT=$HOME/src
 
 
 #export PATH=$PATH:/Users/wharding/src/github.com/wnh/acstatus/ENV/bin
+
+# opam configuration
+test -r /home/wharding/.opam/opam-init/init.zsh && . /home/wharding/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+alias todo="vim $HOME/TODO"
+
+export PATH="$PATH:$HOME/local/Apps/apache-ant-1.10.7/bin:$HOME/local/Apps/apache-maven-3.6.3/bin"
+export PATH="$PATH:$HOME/local/py_env/bin"
+
+#setup nix
+. /home/wharding/.nix-profile/etc/profile.d/nix.sh
+
+export ANSIBLE_NOCOWS=1
+
+export PLAN9=$HOME/local/plan9
+export PATH=$PATH:$PLAN9/bin
+
+export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+GUIX_PROFILE="/home/wharding/.guix-profile"
+. "$GUIX_PROFILE/etc/profile"
+
