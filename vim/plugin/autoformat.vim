@@ -1,6 +1,5 @@
 
 
-
 function! AutoFormatSave()
   if exists("b:fmt_prog")
     let l:out = system(b:fmt_prog, getline(1, '$'))
@@ -13,8 +12,6 @@ function! AutoFormatSave()
     else
       echo "Error formatting" 
     endif
-  else
-    echo "No formatter, set 'b:fmt_prog'"
   endif
 
 endfunction

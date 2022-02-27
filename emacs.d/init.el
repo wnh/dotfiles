@@ -87,7 +87,8 @@
     ;; Look (without extra characters) can be achived with org-indent-mode
     (setq org-adapt-indentation nil)
     (setq org-default-notes-file wnh/todo-file)
-    (setq org-agenda-files `(,wnh/todo-file))
+    (setq org-agenda-files `(,wnh/todo-file
+			     "~/work/org/gkroam/"))
     (setq org-capture-templates
 	  `(("t" "Todo" entry (file+headline ,wnh/todo-file "Inbox")
 	     "* TODO %?\nCreated: %U\n%i")
@@ -172,9 +173,6 @@
   :ensure t
   :config (evil-collection-init))
 
-(use-package prettier
-  :disabled
-  :ensure t)
 
 
 ;; TODO learn how to do the IDO things (still need a good ctrl-p alternative
@@ -190,7 +188,7 @@
     (scroll-bar-mode -1)
     (global-display-line-numbers-mode)
 
-    (global-set-key (kbd "C-S-p") 'ivy-switch-buffer)
+    (global-set-key (kbd "C-S-b") 'ivy-switch-buffer)
 
     (add-hook 'emacs-lisp-mode-hook
 	      (lambda () (define-key evil-normal-state-local-map
@@ -213,6 +211,7 @@
 ;; You can use eval defun inside a comment block and it will grab the
 ;; top-most thing inside the comment. Kinda what you want to happen
 (setq clojure-toplevel-inside-comment-form t)
+(setq cider-clojure-cli-global-options "-J-XX:-OmitStackTraceInFastThrow")
 
 (use-package yaml-mode
   :ensure t)
@@ -266,7 +265,9 @@
 (define-key evil-normal-state-map (kbd "SPC o i") #'wnh/clock-in)
 (define-key evil-normal-state-map (kbd "SPC o o") #'wnh/clock-out)
 (define-key evil-normal-state-map (kbd "SPC o l") #'wnh/clock-in-last)
-(define-key evil-normal-state-map (kbd "SPC o n") #'wnh/org-insert-daily)
+(define-key evil-normal-state-map (kbd "SPC o f") #'deft)
+; Used for gkroam-insert with [N]ode
+;(define-key evil-normal-state-map (kbd "SPC o n") #'wnh/org-insert-daily)
 (define-key evil-normal-state-map (kbd "SPC o c") #'org-capture)
 (define-key evil-normal-state-map (kbd "SPC o A") #'org-agenda)
 (define-key evil-normal-state-map (kbd "SPC o a") (lambda ()
@@ -281,11 +282,6 @@
 (evil-ex-define-cmd "todo" 'wnh/open-todo)
 
 
-;; JAVASCRIPT
-(setq js-indent-level 2)
-; turn prettier on when js is started
-; maybe I should limit this to only the work projects? 
-(add-hook 'js-mode-hook 'prettier-mode) 
 
 ;; TODO how the heck to I make this work with use-package?
 (load-theme 'spacemacs-light)
@@ -299,7 +295,10 @@
 (show-paren-mode +1)
 
 (setq projectile-completion-system   'ivy)
-(projectile-add-known-project "~/oss/guile")
+;(projectile-add-known-project "~/oss/guile")
+(projectile-add-known-project "~/work/src/API")
+(projectile-add-known-project "~/work/src/Website")
+(projectile-add-known-project "~/work/src/tools_api")
 
 ;; TODO - Get Fuzz finding working
 ;;    https://github.com/silentbicycle/ff
@@ -310,7 +309,7 @@
 (add-to-list 'exec-path "/home/wharding/bin")
 (add-to-list 'exec-path "/home/wharding/local/bin")
 (add-to-list 'exec-path "/home/wharding/local/Apps/bin")
-(add-to-list 'exec-path "/home/wharding/.nvm/versions/node/v10.16.3/bin")
+(add-to-list 'exec-path "/home/wharding/.nvm/versions/node/v13.12.0/bin")
 
 (hl-line-mode 1)
 
@@ -462,3 +461,93 @@
 ; (set-frame-font "DejaVuSansMono-9" t nil)
 ; For the mobile screen
 ;(set-frame-font "DejaVuSansMono-11" t nil)
+
+;;; roam
+(use-package gkroam
+  :ensure t
+  :hook (after-init . gkroam-mode)
+  :init
+  (setq gkroam-root-dir "~/work/org/gkroam")
+  (setq gkroam-prettify-page-p t
+        gkroam-show-brackets-p nil
+        gkroam-use-default-filename t
+        gkroam-window-margin 4)
+  (define-key evil-normal-state-map (kbd "SPC o d") #'gkroam-daily)
+  (define-key evil-insert-state-map (kbd "C-l") #'gkroam-insert))
+
+(use-package deft
+  :ensure t
+  :init
+  (setq deft-extensions '("txt" "org"))
+  (setq deft-directory "~/work/org/gkroam"))
+
+(use-package neotree
+  :ensure t)
+
+;; JAVASCRIPT
+;; 
+(setq js-indent-level 2)
+
+(use-package prettier-js
+  ;; :ensure t
+
+  :config
+  ;; TODO - This might be handy
+  ;; https://github.com/codesuki/add-node-modules-path
+  (add-to-list 'exec-path "/home/wharding/.nvm/versions/node/v13.12.0/bin")
+  ;; turn prettier on when js is started
+  ;; maybe I should limit this to only the work projects? 
+  ;; (add-hook 'js-mode-hook 'prettier-mode)
+  )
+
+(use-package flycheck
+  :ensure t)
+
+(defun wnh/path-to-dom-file (src fname)
+  (let ((config-dir (locate-dominating-file src fname)))
+    (if config-dir
+	(concat config-dir fname))))
+
+
+(defun wnh/js-run-eslint-compile ()
+  (interactive)
+  (let* ((src (buffer-file-name (current-buffer)))
+	 (config-file (or (wnh/path-to-dom-file src ".eslintrc.json")
+			  (wnh/path-to-dom-file src ".eslintrc")))
+	 (config-dir (file-name-directory config-file))
+	 (lint (concat config-dir  "node_modules/.bin/eslint"))
+	 )
+    (compile (string-join (list lint "--format" "unix" src) " "))))
+
+(defun wnh/js-run-eslint-compile ()
+  (interactive)
+  (let* ((src (buffer-file-name (current-buffer)))
+	 (default-directory (locate-dominating-file src ".git"))
+	 (xxx (message default-directory))
+	 ;(npx "/home/wharding/.nvm/versions/node/v13.12.0/bin/npx")
+	 (lint (concat default-directory "node_modules/.bin/eslint"))
+	 )
+    (compile (string-join (list lint "eslint" "--format" "unix"  src) " "))))
+
+(defun wnh/js-setup-hook ()
+  (setq indent-tabs-mode nil)
+  (setq show-trailing-whitespace t)
+  (define-key evil-normal-state-map (kbd "C-S-n") #'next-error)
+  (define-key evil-normal-state-map (kbd "C-S-p") #'previous-error)
+  (define-key evil-normal-state-map (kbd "SPC e e") #'wnh/js-run-eslint-compile))
+
+(add-hook 'js-mode-hook #'wnh/js-setup-hook)
+
+(use-package rg
+  :ensure t)
+(setq org-clock-report-include-clocking-task t)
+(evil-ex-define-cmd "r" 'projectile-ripgrep)
+(evil-set-initial-state 'deft-mode 'emacs)
+
+(defun deft-current-window-width ()
+  (- (window-body-width (get-buffer-window deft-buffer)) 5))
+
+(use-package deft
+  :ensure t)
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-ignore-order)))
