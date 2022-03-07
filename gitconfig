@@ -1,15 +1,27 @@
 [user]
 	name = Will Harding
 	email = harding.will@gmail.com
+
 [alias]
-	st   = status
-	ci   = commit
-	d    = diff
-	co   = checkout
+	st = status
+	ci = commit
+	d = diff
+	co = checkout
   llog = log --decorate --graph --branches
-  web  = instaweb --httpd=webrick
+  web = instaweb --httpd=webrick
+
 [push]
 	default = simple
+
 [core]
 	excludesfile = ~/.gitignore_global
 	quotepath = false
+
+[merge]
+	tool = tkdiff
+
+[includeIf "gitdir:~/work/"]
+	path = ~/work/.gitconfig
+
+[diff]
+	algorithm = patience
