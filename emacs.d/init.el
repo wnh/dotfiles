@@ -106,6 +106,12 @@
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
     (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
 
+    (defun wnh/save-advice (&rest r)
+      (save-buffer))
+
+    (advice-add 'org-clock-in      :after #'wnh/save-advice)
+    (advice-add 'org-clock-out     :after #'wnh/save-advice)
+    (advice-add 'org-clock-in-last :after #'wnh/save-advice)
 
     (define-key evil-normal-state-map (kbd "C-S-b") #'switch-to-buffer)
 
