@@ -72,6 +72,11 @@
     (define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
     (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
     (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
+
+    (define-key evil-normal-state-map (kbd "C-S-h") #'windmove-swap-states-left)
+    (define-key evil-normal-state-map (kbd "C-S-j") #'windmove-swap-states-down)
+    (define-key evil-normal-state-map (kbd "C-S-k") #'windmove-swap-states-up)
+    (define-key evil-normal-state-map (kbd "C-S-l") #'windmove-swap-states-right)
     
     (define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
     (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
