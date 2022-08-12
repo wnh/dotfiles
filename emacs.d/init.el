@@ -1,3 +1,14 @@
+;; TODO:
+;;    Extract configs different hosts: frmwrk, x1, x230
+;;       (system-name) => "frmwrk"
+(defvar wnh/machine-config
+  '(("frmwrk"
+     (font-sizes (95 110))
+     (theme solarized-light))
+    ("x1"
+     (font-sizes (90 110))
+     (theme spacemacs-light))))
+
 (setq custom-file "~/.emacs.d/custom-settings.el")
 (load custom-file t)
 
