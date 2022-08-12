@@ -7,4 +7,5 @@ wwwroot/sites/*.vm
 Guardfile
 tags
 .DS_Store
+*/_wnh/*
 

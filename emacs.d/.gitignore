@@ -1,4 +1,3 @@
-
 .cache
 ido.last
 tramp
@@ -9,4 +8,6 @@ transient
 projectile-bookmarks.eld
 url
 \#*\#
+bookmarks
+projects
 *~

@@ -1,0 +1,1 @@
+export MANWIDTH=90 PAGER=cat
