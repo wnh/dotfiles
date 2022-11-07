@@ -7,8 +7,8 @@
 	ci = commit
 	d = diff
 	co = checkout
-  llog = log --decorate --graph --branches
-  web = instaweb --httpd=webrick
+	llog = log --decorate --graph --branches
+	web = instaweb --httpd=webrick
 
 [push]
 	default = simple
