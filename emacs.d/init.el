@@ -428,3 +428,32 @@ it onto the kill ring"
 ;;			   (buffer-modified-p buf))
 ;;		      (is-process-buffer? buf)
 ;;		      (-contains? visible-bufs buf))))))
+
+(use-package dumb-jump
+  :ensure t
+  :config
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+
+(use-package swift-mode
+  :ensure t)
+
+;; TODO: Get SQL Working better: https://www.youtube.com/watch?v=D97vDu_BhwA
+(use-package sql-indent
+  :ensure t)
+(add-hook 'sql-mode-hook
+	  (lambda ()
+	    (setq show-trailing-whitespace t)))
+
+
+(use-package typescript-mode
+  :ensure t
+  :config
+  (setq typescript-expr-indent-offset 2)
+  (setq typescript-indent-level 2))
+
+;; has support support for jsx/tsx files
+(use-package web-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
+
