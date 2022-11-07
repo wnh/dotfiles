@@ -282,7 +282,7 @@ the file, otherwise find the file useing project.el"
           "\\*Async Shell Command\\*"
           "\\*eldoc\\*"
           "\\*xref\\*"
-          "\\*rg\\*"
+          ;;"\\*rg\\*" ;; this is kinda weird now
           help-mode
           compilation-mode))
   (popper-mode +1)
