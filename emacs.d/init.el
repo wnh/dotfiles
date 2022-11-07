@@ -240,7 +240,9 @@ the file, otherwise find the file useing project.el"
       ;;(mongo-dev . t)
       ))
 
-  :hook (org-mode . (fly-spell-mode auto-fill-mode)))
+  (add-to-list 'org-export-backends 'md)
+  (add-hook 'org-mode-hook #'flyspell-mode)
+  (add-hook 'org-mode-hook #'auto-fill-mode))
 ;;
 ;; FONT STUFF
 ;;
@@ -405,7 +407,7 @@ it onto the kill ring"
 (use-package markdown-mode
   :ensure t
   :config
-  (add-hook 'markdown-mode #'fly-spell-mode)
+  (add-hook 'markdown-mode #'flyspell-mode)
   (add-hook 'markdown-mode #'auto-fill-mode))
 
 (use-package treemacs
