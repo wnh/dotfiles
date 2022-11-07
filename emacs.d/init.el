@@ -233,7 +233,8 @@ the file, otherwise find the file useing project.el"
   (setq org-tags-column 0)
   (setq org-todo-keywords
 	'((sequence "TODO" "|" "DONE" "CANCELED")))
-  (setq org-agenda-files `("~/work/org"))
+  (setq org-agenda-files `("~/work/org"
+			   "~/Dropbox/org"))
   (org-babel-do-load-languages
     'org-babel-load-languages
     '((shell . t)
