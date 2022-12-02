@@ -210,12 +210,23 @@ the file, otherwise find the file useing project.el"
 
 (use-package project
   :config
-  (define-key evil-normal-state-map (kbd "C-p") #'wnh/ctrl-p))
+  (define-key evil-normal-state-map (kbd "C-p") #'wnh/ctrl-p)
+  (define-key evil-normal-state-map (kbd "SPC p p") #'project-switch-project)
+  (define-key evil-normal-state-map (kbd "SPC p s") #'project-shell)
+  (define-key evil-normal-state-map (kbd "SPC p e") #'project-eshell)
+  (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired))
 
 (use-package rg
   :ensure t
   :config
-  (define-key evil-normal-state-map (kbd "SPC s") #'rg-project))
+
+  (rg-define-search wnh/rg-project-js
+    :query ask
+    :files "js"
+    :dir project)
+
+  (define-key evil-normal-state-map (kbd "SPC s") #'rg-project)
+  (define-key evil-normal-state-map (kbd "SPC f") #'wnh/rg-project-js))
 
 (use-package magit
   :ensure t
@@ -243,7 +254,8 @@ the file, otherwise find the file useing project.el"
 
   (add-to-list 'org-export-backends 'md)
   (add-hook 'org-mode-hook #'flyspell-mode)
-  (add-hook 'org-mode-hook #'auto-fill-mode))
+  (add-hook 'org-mode-hook #'auto-fill-mode)
+  (setq org-default-notes-file "/home/wharding/work/org/INBOX.org"))
 ;;
 ;; FONT STUFF
 ;;
@@ -265,11 +277,6 @@ the file, otherwise find the file useing project.el"
 (use-package exec-path-from-shell
   :ensure t)
 
-(use-package prettier-js
-  :ensure t
-  ;; :config
-  ;; (setq exec-path (append exec-path '("/home/wharding/.nvm/versions/node/v13.14.0/bin")))
-  )
 
 (use-package popper
   :ensure t
@@ -284,7 +291,9 @@ the file, otherwise find the file useing project.el"
           "\\*xref\\*"
           ;;"\\*rg\\*" ;; this is kinda weird now
           help-mode
-          compilation-mode))
+          compilation-mode
+	  ;;shell-mode
+	  ))
   (popper-mode +1)
   (popper-echo-mode +1))
 
@@ -292,8 +301,7 @@ the file, otherwise find the file useing project.el"
   :ensure t
   :config
   (setq eldoc-idle-delay 5)
-  (setq eglot-stay-out-of '(company
-			    flymake)))
+  (setq eglot-stay-out-of '(company)))
 
 (defun wnh/project-get-filename ()
   "Use project-find-file to locate a file and then insert a relative
@@ -383,13 +391,6 @@ it onto the kill ring"
   (interactive "r")
   (async-shell-command  (buffer-substring-no-properties start end)))
 
-;; TODO(wnh): put this somewhere better
-(rg-define-search wnh/rg-project-js
-  :query ask
-  :files "js"
-  :dir project)
-
-(define-key evil-normal-state-map (kbd "SPC f") #'wnh/rg-project-js)
 (define-key evil-normal-state-map (kbd "SPC q") #'indent-region)
 
 (defun org-babel-execute:mongo-dev (body params)
@@ -445,6 +446,14 @@ it onto the kill ring"
 	    (setq show-trailing-whitespace t)))
 
 
+;; TODO Figure out the hooks for this
+(use-package prettier-js
+  :ensure t)
+
+(use-package add-node-modules-path
+  :ensure t
+  :hook (js-mode web-mode typescript-mode))
+
 (use-package typescript-mode
   :ensure t
   :config
@@ -455,5 +464,13 @@ it onto the kill ring"
 (use-package web-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2))
 
+(use-package bigquery-mode
+  :load-path "pkg-custom/bigquery-mode")
+
+(use-package nodejs-repl
+  :ensure t)
