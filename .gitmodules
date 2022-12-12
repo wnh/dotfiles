@@ -94,3 +94,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = https://github.com/ervandew/supertab
+[submodule "emacs.d/pkg-custom/bigquery-mode"]
+	path = emacs.d/pkg-custom/bigquery-mode
+	url = https://github.com/christophstockhusen/bigquery-mode
