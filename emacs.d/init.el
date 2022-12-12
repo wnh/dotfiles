@@ -7,8 +7,22 @@
      (theme solarized-light))
     ("x1"
      (font-sizes (90 110))
-     (theme spacemacs-light))))
+     (theme spacemacs-light))
+    ("Wills-MBP.localdomain"
+     (font-sizes (110 130))
+     (theme solarized-light))))
 
+
+(cond
+ ((string= (system-name) "frmwrk")
+    (setq-default line-spacing 0.4))
+ ((string= (system-name) "x1")
+    (setq-default line-spacing 0.4))
+ ((string= (system-name) "Wills-MBP.localdomain")
+  (setq mac-command-modifier 'meta)
+  (setq-default line-spacing 0.7)))
+
+(setq ring-bell-function 'ignore)
 (setq custom-file "~/.emacs.d/custom-settings.el")
 (load custom-file t)
 
@@ -43,7 +57,6 @@
     (global-display-line-numbers-mode 1)
     (global-hl-line-mode 1)
 
-    (setq-default line-spacing 0.4)
 
     (setq gc-cons-theshold 20000000
 	  inhibit-splash-screen t
@@ -77,6 +90,10 @@
   :config
     (evil-mode 1)
 
+    ;; Easier on the Mac where my Meta Key has changed
+    (define-key evil-normal-state-map (kbd "C-x C-m") #'execute-extended-command)
+    (define-key evil-normal-state-map (kbd "C-c C-m") #'execute-extended-command)
+    (define-key evil-normal-state-map (kbd "SPC e") #'execute-extended-command)
 
     ;; Custom Keys
     (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
