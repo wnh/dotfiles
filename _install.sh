@@ -1,7 +1,11 @@
 
-IGNORE="_install.sh"
 
-echo "Installing dot files..."
+echo "[+] Pulling down plugin repos"
+git submodule update --init --recursive
+
+echo "[+] Installing dot files..."
+
+IGNORE="_install.sh"
 
 for src in *; do
   dst="${HOME}/.$src"
