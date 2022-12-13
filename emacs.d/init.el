@@ -13,14 +13,6 @@
      (theme solarized-light))))
 
 
-(cond
- ((string= (system-name) "frmwrk")
-    (setq-default line-spacing 0.4))
- ((string= (system-name) "x1")
-    (setq-default line-spacing 0.4))
- ((string= (system-name) "Wills-MBP.localdomain")
-  (setq mac-command-modifier 'meta)
-  (setq-default line-spacing 0.7)))
 
 (setq ring-bell-function 'ignore)
 (setq custom-file "~/.emacs.d/custom-settings.el")
@@ -47,7 +39,16 @@
 
 (use-package emacs
   :config
-    (menu-bar-mode -1)
+    (cond
+     ((string= (system-name) "frmwrk")
+      (menu-bar-mode -1)
+      (setq-default line-spacing 0.4))
+     ((string= (system-name) "x1")
+      (menu-bar-mode -1)
+      (setq-default line-spacing 0.4))
+     ((string= (system-name) "Wills-MBP.localdomain")
+      (setq mac-command-modifier 'meta)
+      (setq-default line-spacing 0.7)))
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
     (blink-cursor-mode -1)
