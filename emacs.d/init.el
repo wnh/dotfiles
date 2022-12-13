@@ -289,7 +289,6 @@ the file, otherwise find the file useing project.el"
 	(set-face-attribute 'default nil :height small)
       (set-face-attribute 'default nil :height big))
     (setq wnh/font-big (not wnh/font-big))))
-(load "~/work/etc/emacs-config.el")
 
 ;; TODO: Make prettier work 
 (use-package exec-path-from-shell
