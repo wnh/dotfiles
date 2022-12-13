@@ -190,7 +190,7 @@ the file, otherwise find the file useing project.el"
   (interactive)
   (let ((fname (buffer-file-name (current-buffer))))
     (if (and fname
-	     (string-match-p "^/home/wharding/work/org/gkroam" fname))
+	     (string-match-p (concat "^" (expand-file-name "~") "/work/org/gkroam") fname))
       (gkroam-find)
     (project-find-file))))
 
@@ -273,7 +273,7 @@ the file, otherwise find the file useing project.el"
   (add-to-list 'org-export-backends 'md)
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'org-mode-hook #'auto-fill-mode)
-  (setq org-default-notes-file "/home/wharding/work/org/INBOX.org"))
+  (setq org-default-notes-file "~/work/org/INBOX.org"))
 ;;
 ;; FONT STUFF
 ;;
@@ -419,7 +419,7 @@ it onto the kill ring"
 
 (defun initel ()
   (interactive)
-  (find-file "/home/wharding/.emacs.d/init.el"))
+  (find-file "~/.emacs.d/init.el"))
 
 (use-package rust-mode
   :ensure t)
