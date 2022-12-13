@@ -491,3 +491,6 @@ it onto the kill ring"
 
 (use-package nodejs-repl
   :ensure t)
+
+(use-package  nix-mode
+  :ensure t)
