@@ -46,7 +46,7 @@
      ((string= (system-name) "x1")
       (menu-bar-mode -1)
       (setq-default line-spacing 0.4))
-     ((string= (system-name) "Wills-MBP.localdomain")
+     ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
       (setq mac-command-modifier 'meta)
       (setq-default line-spacing 0.7)))
     (tool-bar-mode -1)
