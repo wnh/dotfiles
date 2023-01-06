@@ -37,7 +37,7 @@ nownow() { date +"%Y%m%dT%H%M%S"; }
 
 
 export DEFAULT_PROMPT="$PROMPT"
-PROMPT="%{$fg[green]%}\$(swd)\$(gitst)%#%{$reset_color%} "
+PROMPT="%{$fg[green]%}\$(swd)\$(git_prompt)%#%{$reset_color%} "
 
 export PATH=$PATH:$HOME/bin
 
@@ -46,3 +46,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 export ANSIBLE_NOCOWS=1
+
+echo loaded zshrc...
+
