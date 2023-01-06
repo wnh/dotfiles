@@ -91,10 +91,15 @@
   :config
     (evil-mode 1)
 
+    (evil-define-key 'normal emacs-lisp-mode-map (kbd "C-e") #'eval-defun)
+
     ;; Easier on the Mac where my Meta Key has changed
     (define-key evil-normal-state-map (kbd "C-x C-m") #'execute-extended-command)
     (define-key evil-normal-state-map (kbd "C-c C-m") #'execute-extended-command)
     (define-key evil-normal-state-map (kbd "SPC e") #'execute-extended-command)
+    (define-key evil-normal-state-map (kbd "SPC b") #'switch-to-buffer)
+    ;; TODO:put this in tehe eglot section?
+    (define-key evil-normal-state-map (kbd "SPC l r") #'eglot-rename)
 
     ;; Custom Keys
     (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
@@ -204,6 +209,11 @@ the file, otherwise find the file useing project.el"
 	  gkroam-use-default-filename t
 	  gkroam-window-margin 4)
     (define-key evil-normal-state-map (kbd "SPC o d") #'gkroam-daily)
+
+    (define-key evil-normal-state-map (kbd "SPC o t")
+      (lambda ()
+	(interactive)
+	(gkroam-find "todo")))
 
     (define-key evil-insert-state-map (kbd "C-S-l") #'gkroam-insert)
     :config
@@ -361,6 +371,7 @@ it onto the kill ring"
 	      (setq show-trailing-whitespace t)))
   (add-hook 'js-mode-hook #'flyspell-prog-mode)
   (evil-define-key 'normal js-mode-map
+    (kbd "K") #'eldoc
     (kbd "SPC r") #'wnh/js-insert-require
     (kbd "SPC h") #'wnh/copy-location))
 
