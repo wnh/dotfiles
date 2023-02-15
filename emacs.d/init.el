@@ -12,7 +12,8 @@
      (font-sizes (110 130))
      (theme solarized-light))))
 
-
+(setq exec-path
+      (cons "/Users/wharding/.nix-profile/bin" exec-path))
 
 (setq ring-bell-function 'ignore)
 (setq custom-file "~/.emacs.d/custom-settings.el")
@@ -39,16 +40,7 @@
 
 (use-package emacs
   :config
-    (cond
-     ((string= (system-name) "frmwrk")
-      (menu-bar-mode -1)
-      (setq-default line-spacing 0.4))
-     ((string= (system-name) "x1")
-      (menu-bar-mode -1)
-      (setq-default line-spacing 0.4))
-     ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
-      (setq mac-command-modifier 'meta)
-      (setq-default line-spacing 0.7)))
+    (menu-bar-mode -1)
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
     (blink-cursor-mode -1)
@@ -57,7 +49,21 @@
     (hl-line-mode 1)
     (global-display-line-numbers-mode 1)
     (global-hl-line-mode 1)
+    (cond
+     ((string= (system-name) "frmwrk")
+      (menu-bar-mode -1)
+      (setq-default line-spacing 0.4))
+     ((string= (system-name) "x1")
+      (menu-bar-mode -1)
+      (setq-default line-spacing 0.4))
+     ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
+      (global-display-line-numbers-mode -1)
+      (setq mac-command-modifier 'meta)
+      (set-face-attribute 'default nil :family "Verdana")
+      (set-face-attribute 'default nil :height 110)
+      (setq-default line-spacing 0.7)))
 
+    (setq indent-tabs-mode nil)
 
     (setq gc-cons-theshold 20000000
 	  inhibit-splash-screen t
@@ -100,6 +106,7 @@
     (define-key evil-normal-state-map (kbd "SPC b") #'switch-to-buffer)
     ;; TODO:put this in tehe eglot section?
     (define-key evil-normal-state-map (kbd "SPC l r") #'eglot-rename)
+    (define-key evil-normal-state-map (kbd "SPC r e") #'recompile)
 
     ;; Custom Keys
     (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
@@ -171,6 +178,8 @@
   :ensure t
   :defer t
   :init
+  (setq solarized-high-contrast-mode-line t)
+  (setq solarized-use-less-bold t)
   (load-theme 'solarized-light))
 
 
@@ -199,6 +208,15 @@ the file, otherwise find the file useing project.el"
       (gkroam-find)
     (project-find-file))))
 
+(defun wnh/working-mem-file ()
+  (interactive)
+  (gkroam-find "WorkingMem")
+  (end-of-buffer))
+
+(defun wnh/todo-file ()
+  (interactive)
+  (gkroam-find "todo"))
+
 (use-package gkroam
   :ensure t
   :hook (after-init . gkroam-mode)
@@ -209,6 +227,9 @@ the file, otherwise find the file useing project.el"
 	  gkroam-use-default-filename t
 	  gkroam-window-margin 4)
     (define-key evil-normal-state-map (kbd "SPC o d") #'gkroam-daily)
+    (define-key evil-normal-state-map (kbd "SPC o w") #'wnh/working-mem-file)
+    (define-key evil-normal-state-map (kbd "SPC o t") #'wnh/todo-file)
+    (define-key evil-normal-state-map (kbd "SPC o f") #'gkroam-find)
 
     (define-key evil-normal-state-map (kbd "SPC o t")
       (lambda ()
@@ -318,7 +339,7 @@ the file, otherwise find the file useing project.el"
           "\\*xref\\*"
           ;;"\\*rg\\*" ;; this is kinda weird now
           help-mode
-          compilation-mode
+          ;;compilation-mode
 	  ;;shell-mode
 	  ))
   (popper-mode +1)
@@ -328,7 +349,10 @@ the file, otherwise find the file useing project.el"
   :ensure t
   :config
   (setq eldoc-idle-delay 5)
-  (setq eglot-stay-out-of '(company)))
+  (setq eglot-stay-out-of '(company))
+  (add-to-list 'eglot-server-programs
+	 '(js-mode "/Users/wharding/work/bin/js-lsp"))
+  )
 
 (defun wnh/project-get-filename ()
   "Use project-find-file to locate a file and then insert a relative
@@ -372,7 +396,7 @@ it onto the kill ring"
   (add-hook 'js-mode-hook #'flyspell-prog-mode)
   (evil-define-key 'normal js-mode-map
     (kbd "K") #'eldoc
-    (kbd "SPC r") #'wnh/js-insert-require
+    (kbd "SPC j r") #'wnh/js-insert-require
     (kbd "SPC h") #'wnh/copy-location))
 
 (use-package clojure-mode
@@ -480,7 +504,8 @@ it onto the kill ring"
 
 (use-package add-node-modules-path
   :ensure t
-  :hook (js-mode web-mode typescript-mode))
+  ;;:hook (js-mode web-mode typescript-mode)
+  )
 
 (use-package typescript-mode
   :ensure t
@@ -505,3 +530,26 @@ it onto the kill ring"
 
 (use-package  nix-mode
   :ensure t)
+
+(use-package  lua-mode
+  :ensure t)
+
+
+(defun wnh/wip-clean-buffers ()
+  (let ((proc-buffers (mapcar #'process-buffer (process-list)))
+	(visible-buffers (mapcar #'window-buffer (window-list)))
+	(buffers (buffer-list)))
+    (dolist (b buffers)
+      (if (not (or (buffer-modified-p b)
+		   (-contains? proc-buffers b)
+		   (-contains? visible-buffers b)))
+	  (message "should kill %s" (buffer-name b))
+	  (message "SKIP %s" (buffer-name b))
+	))))
+
+;; (wnh/wip-clean-buffers)
+
+(use-package current-window-only
+  :load-path "lib"
+  :config
+  (current-window-only-mode 1))
