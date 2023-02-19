@@ -135,6 +135,7 @@
     (define-key evil-normal-state-map (kbd "SPC o i") #'org-clock-in)
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
     (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
+    (define-key evil-normal-state-map (kbd "SPC o a") #'org-agenda)
 
     (defun wnh/save-advice (&rest r)
       (save-buffer))
@@ -437,8 +438,10 @@ it onto the kill ring"
   :config
   (setq elfeed-feeds
 	;; Taskhuman Github Updates
-	'("https://github.com/organizations/TaskHuman/wnh.private.atom?token=AAA3Y5AWYQACP3JODIMEFQWAREAPU"
-	  "https://taskhuman.com/feed/")))
+	'("https://lobste.rs/rss"
+	  "https://planet.emacslife.com/atom.xml"
+	  "https://nullprogram.com/feed/"
+	  "https://presumably.de/")))
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
