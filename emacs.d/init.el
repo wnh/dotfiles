@@ -577,6 +577,26 @@ it onto the kill ring"
 ;;        ;; goto-line is for interactive use
 ;;        (goto-char (point-min))
 ;;        (forward-line (1- line-number))))))
+
+(defun wnh/wip--select-prev-command ()
+  ;; Run this in the comint buffer
+  ;; (setq wnh/tmp comint-input-ring)
+
+  (->> wnh/tmp
+       (cddr)
+       ;;(-map (lambda (x) (message "%s" x)))
+       (-map #'substring-no-properties)
+       (completing-read "Pick one: ")))
+
+
+;; (load-file "~/tmp/xah-fly-keys.el")
+;; (evil-mode -1)
+;;
+;; (require 'xah-fly-keys)
+;; (xah-fly-keys-set-layout "qwerty")
+;;
+;; (xah-fly-keys 1)
+
 (use-package rcirc
   :config
   (setq rcirc-server-alist '(("irc.libera.chat"
