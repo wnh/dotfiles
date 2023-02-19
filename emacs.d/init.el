@@ -265,8 +265,7 @@ the file, otherwise find the file useing project.el"
   (define-key evil-normal-state-map (kbd "SPC p e") #'project-eshell)
   (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired)
   (add-to-list 'project-switch-commands '(project-shell "RunShell"))
-
-  )
+  (define-key evil-normal-state-map (kbd "SPC p n") #'nodejs-repl))
 
 (use-package rg
   :ensure t
@@ -529,7 +528,10 @@ it onto the kill ring"
   :load-path "pkg-custom/bigquery-mode")
 
 (use-package nodejs-repl
-  :ensure t)
+  :ensure t
+  :config
+  (evil-define-key 'normal js-mode-map (kbd "C-e") #'nodejs-repl-send-line)
+  (evil-define-key 'visual js-mode-map (kbd "C-e") #'nodejs-repl-send-region))
 
 (use-package  nix-mode
   :ensure t)
