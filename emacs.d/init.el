@@ -263,7 +263,11 @@ the file, otherwise find the file useing project.el"
   (define-key evil-normal-state-map (kbd "SPC p p") #'project-switch-project)
   (define-key evil-normal-state-map (kbd "SPC p s") #'project-shell)
   (define-key evil-normal-state-map (kbd "SPC p e") #'project-eshell)
-  (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired))
+  (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired)
+
+  (add-to-list 'project-switch-commands '(project-shell "RunShell"))
+
+  )
 
 (use-package rg
   :ensure t
@@ -553,3 +557,22 @@ it onto the kill ring"
   :load-path "lib"
   :config
   (current-window-only-mode 1))
+
+;; Open files and goto lines like we see from g++ etc. i.e. file:line#
+;; (to-do "make `find-file-line-number' work for emacsclient as well")
+;; (to-do "make `find-file-line-number' check if the file exists")
+;;(defadvice find-file (around find-file-line-number
+;;                             (filename &optional wildcards)
+;;                             activate)
+;;  "Turn files like file.cpp:14 into file.cpp and going to the 14-th line."
+;;  (save-match-data
+;;    (let* ((matched (string-match "^\\(.*\\):\\([0-9]+\\):?$" filename))
+;;           (line-number (and matched
+;;                             (match-string 2 filename)
+;;                             (string-to-number (match-string 2 filename))))
+;;           (filename (if matched (match-string 1 filename) filename)))
+;;      ad-do-it
+;;      (when line-number
+;;        ;; goto-line is for interactive use
+;;        (goto-char (point-min))
+;;        (forward-line (1- line-number))))))
