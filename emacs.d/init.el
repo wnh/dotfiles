@@ -458,7 +458,12 @@ it onto the kill ring"
   (find-file "~/.emacs.d/init.el"))
 
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :after (eglot)
+  :config
+  ;; Use the rust-analyzer that rustup has installed
+  (setf (alist-get 'rust-mode eglot-server-programs) '("wnh-rust-analyzer")))
+
 
 (use-package markdown-mode
   :ensure t
