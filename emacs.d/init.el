@@ -91,7 +91,7 @@
 
 (use-package evil
   :ensure t
-  :init 
+  :init
     (setq evil-want-keybinding nil)
     (setq evil-want-C-u-scroll t)
   :config
@@ -118,7 +118,7 @@
     (define-key evil-normal-state-map (kbd "C-S-j") #'windmove-swap-states-down)
     (define-key evil-normal-state-map (kbd "C-S-k") #'windmove-swap-states-up)
     (define-key evil-normal-state-map (kbd "C-S-l") #'windmove-swap-states-right)
-    
+
     (define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
     (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
     (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
@@ -155,12 +155,12 @@
   :ensure t)
 
 (use-package undo-tree
-  :ensure t 
+  :ensure t
   :after evil
   :config
   (evil-set-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
- 
+
 (use-package evil-collection
   :ensure t
   :after evil
@@ -246,7 +246,7 @@ the file, otherwise find the file useing project.el"
     ;;		(evil-local-set-key 'normal (kbd "C-p") #'gkroam-find)))
 
     (add-hook 'gkroam-mode-hook 'flyspell-mode))
-	  
+
 ;;(defvar wnh/project-list '("~/work/src/API"
 ;;			   "~/work/src/Website"))
 ;;
@@ -264,7 +264,6 @@ the file, otherwise find the file useing project.el"
   (define-key evil-normal-state-map (kbd "SPC p s") #'project-shell)
   (define-key evil-normal-state-map (kbd "SPC p e") #'project-eshell)
   (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired)
-
   (add-to-list 'project-switch-commands '(project-shell "RunShell"))
 
   )
@@ -314,7 +313,7 @@ the file, otherwise find the file useing project.el"
 ;;
 (defvar wnh/font-big nil
   "Have we bumped the font size the high DPI laptop screen?")
-;; was 90 before I got the 4k monitor 
+;; was 90 before I got the 4k monitor
 (set-face-attribute 'default nil :height 95)
 (defun wnh/toggle-font-size ()
   (interactive)
@@ -325,7 +324,7 @@ the file, otherwise find the file useing project.el"
       (set-face-attribute 'default nil :height big))
     (setq wnh/font-big (not wnh/font-big))))
 
-;; TODO: Make prettier work 
+;; TODO: Make prettier work
 (use-package exec-path-from-shell
   :ensure t)
 
@@ -393,7 +392,7 @@ it onto the kill ring"
 
 (progn ;; JS config
   (setq js-indent-level 2)
-  (add-hook 'js-mode-hook 
+  (add-hook 'js-mode-hook
 	    (lambda ()
 	      (setq indent-tabs-mode nil)
 	      (setq show-trailing-whitespace t)))
