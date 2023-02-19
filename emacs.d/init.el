@@ -575,3 +575,12 @@ it onto the kill ring"
 ;;        ;; goto-line is for interactive use
 ;;        (goto-char (point-min))
 ;;        (forward-line (1- line-number))))))
+(use-package rcirc
+  :config
+  (setq rcirc-server-alist '(("irc.libera.chat"
+			      :nick "wnh"
+			      :username "wnh"
+			      :channels ("#openbsd"))))
+  ;;(setq rcirc-auth-info '(()))
+  ;; /msg NickServ IDENTIFY wnh <password>
+  )
