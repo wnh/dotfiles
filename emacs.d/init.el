@@ -439,8 +439,11 @@ it onto the kill ring"
   :config
   (setq elfeed-feeds
 	;; Taskhuman Github Updates
-	'("https://github.com/organizations/TaskHuman/wnh.private.atom?token=AAA3Y5AWYQACP3JODIMEFQWAREAPU"
-	  "https://taskhuman.com/feed/")))
+	'(("https://nullprogram.com/feed/" code)
+          ("https://speechcode.com/blog/rss" code)
+          ("https://brandur.org/articles.atom" code)
+          ("https://brandur.org/fragments.atom" code)
+	  ("https://taskhuman.com/feed/" work))))
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
