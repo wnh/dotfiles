@@ -130,7 +130,9 @@
     (define-key evil-normal-state-map (kbd "SPC o i") #'org-clock-in)
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
     (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
-    (define-key evil-normal-state-map (kbd "SPC o a") #'org-agenda)
+    (define-key evil-normal-state-map (kbd "SPC o a") (lambda ()
+							(interactive)
+							(org-agenda-list 2)))
 
     (defun wnh/save-advice (&rest r)
       (save-buffer))
@@ -555,10 +557,11 @@ it onto the kill ring"
 
 ;; (wnh/wip-clean-buffers)
 
-(use-package current-window-only
-  :load-path "lib"
-  :config
-  (current-window-only-mode 1))
+;(use-package current-window-only
+;  :load-path "lib"
+;  :config
+;  (current-window-only-mode 1))
+;; (current-window-only-mode -1)
 
 ;; Open files and goto lines like we see from g++ etc. i.e. file:line#
 ;; (to-do "make `find-file-line-number' work for emacsclient as well")
