@@ -1,17 +1,3 @@
-;; TODO:
-;;    Extract configs different hosts: frmwrk, x1, x230
-;;       (system-name) => "frmwrk"
-(defvar wnh/machine-config
-  '(("frmwrk"
-     (font-sizes (95 110))
-     (theme solarized-light))
-    ("x1"
-     (font-sizes (90 110))
-     (theme spacemacs-light))
-    ("Wills-MBP.localdomain"
-     (font-sizes (110 130))
-     (theme solarized-light))))
-
 (setq exec-path
       (cons "/Users/wharding/.nix-profile/bin" exec-path))
 
@@ -51,16 +37,25 @@
     (global-hl-line-mode 1)
     (cond
      ((string= (system-name) "frmwrk")
+      (setq wnh/font-small 95)
+      (setq wnh/font-large 110)
+      (load-theme 'solarized-light)
       (menu-bar-mode -1)
       (setq-default line-spacing 0.4))
      ((string= (system-name) "x1")
+      (setq wnh/font-small 90)
+      (setq wnh/font-large 110)
       (menu-bar-mode -1)
+      (load-theme 'spacemacs-light)
       (setq-default line-spacing 0.4))
      ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
-      (global-display-line-numbers-mode -1)
+      (load-theme 'solarized-light)
       (setq mac-command-modifier 'meta)
-      (set-face-attribute 'default nil :family "Verdana")
-      (set-face-attribute 'default nil :height 110)
+      (global-display-line-numbers-mode -1)
+      ;(set-face-attribute 'default nil :family "Verdana")
+      ;(set-face-attribute 'default nil :height 110)
+      (setq wnh/font-small 110)
+      (setq wnh/font-large 130)
       (setq-default line-spacing 0.7)))
 
     (setq indent-tabs-mode nil)
@@ -171,17 +166,14 @@
 (use-package spacemacs-theme
   :disabled t
   :ensure t
-  :defer t
-  :init
-  (load-theme 'spacemacs-light))
+  :defer t)
 
 (use-package solarized-theme
   :ensure t
   :defer t
-  :init
+  :config
   (setq solarized-high-contrast-mode-line t)
-  (setq solarized-use-less-bold t)
-  (load-theme 'solarized-light))
+  (setq solarized-use-less-bold t))
 
 
 (use-package vertico
@@ -308,21 +300,19 @@ the file, otherwise find the file useing project.el"
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'org-mode-hook #'auto-fill-mode)
   (setq org-default-notes-file "~/work/org/INBOX.org"))
+
 ;;
 ;; FONT STUFF
 ;;
-(defvar wnh/font-big nil
+(defvar wnh/font-is-big? nil
   "Have we bumped the font size the high DPI laptop screen?")
-;; was 90 before I got the 4k monitor
-(set-face-attribute 'default nil :height 95)
+(set-face-attribute 'default nil :height wnh/font-small)
 (defun wnh/toggle-font-size ()
   (interactive)
-  (let ((big    110)
-	(small   95))
-    (if wnh/font-big
-	(set-face-attribute 'default nil :height small)
-      (set-face-attribute 'default nil :height big))
-    (setq wnh/font-big (not wnh/font-big))))
+  (if wnh/font-is-big?
+      (set-face-attribute 'default nil :height wnh/font-small)
+    (set-face-attribute 'default nil :height wnh/font-large))
+  (setq wnh/font-is-big? (not wnh/font-is-big?)))
 
 ;; TODO: Make prettier work
 (use-package exec-path-from-shell
@@ -438,10 +428,13 @@ it onto the kill ring"
   :config
   (setq elfeed-feeds
 	;; Taskhuman Github Updates
-	'("https://lobste.rs/rss"
-	  "https://planet.emacslife.com/atom.xml"
-	  "https://nullprogram.com/feed/"
-	  "https://presumably.de/")))
+	'(("https://planet.emacslife.com/atom.xml")
+	  ("https://presumably.de/")
+	  ("https://nullprogram.com/feed/" code)
+          ("https://speechcode.com/blog/rss" code)
+          ("https://brandur.org/articles.atom" code)
+          ("https://brandur.org/fragments.atom" code)
+	  ("https://taskhuman.com/feed/" work))))
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"

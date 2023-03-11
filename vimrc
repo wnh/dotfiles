@@ -1,11 +1,9 @@
 
 set nocompatible              " be iMproved, required
-
-
 set timeoutlen=50
 "set t_Co=256 
 "let base16colorspace=256
-"syntax on
+syntax off
 
 set backupdir=~/.vim/_backup/,.backup/,/tmp//
 set directory=~/.vim/_swp/,.swp/,/tmp//
