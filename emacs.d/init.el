@@ -425,19 +425,6 @@ it onto the kill ring"
 (use-package olivetti
   :ensure t)
 
-(use-package elfeed
-  :ensure t
-  :config
-  (setq elfeed-feeds
-	;; Taskhuman Github Updates
-	'(("https://planet.emacslife.com/atom.xml")
-	  ("https://presumably.de/")
-	  ("https://nullprogram.com/feed/" code)
-          ("https://speechcode.com/blog/rss" code)
-          ("https://brandur.org/articles.atom" code)
-          ("https://brandur.org/fragments.atom" code)
-	  ("https://taskhuman.com/feed/" work))))
-
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
   (interactive "r")
