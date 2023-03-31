@@ -472,6 +472,9 @@ it onto the kill ring"
    Finds the buffers that 1. are not currently being displayed (ie:
    wont mess up the windows), 2. are not dirty (wont discard state),
    3. are not associated with an active process, and then kills them."
+  ;; TODO: *Minibuf* and *Echo Area* buffers keep getting killed,
+  ;;       doesn't seem to affect anything but those can probably be
+  ;;       skipped
   (interactive)
   (let* ((visible-bufs (->> (window-list)
 			   (-map #'window-buffer)))
@@ -484,7 +487,8 @@ it onto the kill ring"
 					 (-contains? visible-bufs buf))))))))
     (dolist (buf closeable)
       (message "Cleaning: %s" buf)
-      (kill-buffer buf))))
+      (kill-buffer buf))
+    (message "Cleanded %d buffers" (length closeable))))
 
 
 (use-package dumb-jump
