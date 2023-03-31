@@ -466,19 +466,26 @@ it onto the kill ring"
   :ensure t)
 
 
-;;TODO - a clean function to remove all non-visible, non-process, saved buffers
-;;(let ((visible-bufs (->> (window-list)
-;;			 (-map #'window-buffer))))
-;;  (flet
-;;
-;;      (is-process-buffer? (lambda (b) n)))
-;;
-;;  (->> (buffer-list)
-;;       (-filter (lambda (buf)
-;;		  (or (and (buffer-file-name buf)
-;;			   (buffer-modified-p buf))
-;;		      (is-process-buffer? buf)
-;;		      (-contains? visible-bufs buf))))))
+(defun wnh/clean-buffers ()
+  "Clean up the million buffer that you totally have
+
+   Finds the buffers that 1. are not currently being displayed (ie:
+   wont mess up the windows), 2. are not dirty (wont discard state),
+   3. are not associated with an active process, and then kills them."
+  (interactive)
+  (let* ((visible-bufs (->> (window-list)
+			   (-map #'window-buffer)))
+	 (closeable (->> (buffer-list)
+			 (-filter (lambda (buf)
+				    (not
+				     (or (and (buffer-file-name buf)
+					      (buffer-modified-p buf))
+					 (get-buffer-process buf)
+					 (-contains? visible-bufs buf))))))))
+    (dolist (buf closeable)
+      (message "Cleaning: %s" buf)
+      (kill-buffer buf))))
+
 
 (use-package dumb-jump
   :ensure t
