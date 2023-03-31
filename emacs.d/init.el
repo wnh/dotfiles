@@ -102,6 +102,7 @@
     ;; TODO:put this in tehe eglot section?
     (define-key evil-normal-state-map (kbd "SPC l r") #'eglot-rename)
     (define-key evil-normal-state-map (kbd "SPC r e") #'recompile)
+    (define-key evil-normal-state-map (kbd "SPC r s") #'wnh/shell)
 
     ;; Custom Keys
     (define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
@@ -259,8 +260,13 @@ the file, otherwise find the file useing project.el"
   (define-key evil-normal-state-map (kbd "SPC p s") #'project-shell)
   (define-key evil-normal-state-map (kbd "SPC p e") #'project-eshell)
   (define-key evil-normal-state-map (kbd "SPC p d") #'project-dired)
-  (add-to-list 'project-switch-commands '(project-shell "RunShell"))
-  (define-key evil-normal-state-map (kbd "SPC p n") #'nodejs-repl))
+  (define-key evil-normal-state-map (kbd "SPC p n") #'nodejs-repl)
+
+  (setq project-switch-commands '((project-shell "Shell" ?s)
+				  (project-find-file "Find file" ?p)
+				  (project-find-regexp "Find regexp" ?f)
+				  (project-find-dir "Find directory" ?d)
+				  (magit "Magit" ?g))))
 
 (use-package rg
   :ensure t
