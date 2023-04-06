@@ -24,6 +24,10 @@
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
 
+;; Set some defaults
+(setq wnh/font-small 95)
+(setq wnh/font-large 110)
+
 (use-package emacs
   :config
     (menu-bar-mode -1)
@@ -39,7 +43,6 @@
      ((string= (system-name) "frmwrk")
       (setq wnh/font-small 85)
       (setq wnh/font-large 110)
-      (load-theme 'solarized-light)
       (menu-bar-mode -1)
       (set-face-attribute 'default nil :family "DejaVu Sans")
       (setq-default line-spacing 0.6))
@@ -47,10 +50,8 @@
       (setq wnh/font-small 90)
       (setq wnh/font-large 110)
       (menu-bar-mode -1)
-      (load-theme 'spacemacs-light)
       (setq-default line-spacing 0.4))
      ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
-      (load-theme 'solarized-light)
       (setq mac-command-modifier 'meta)
       (global-display-line-numbers-mode -1)
       ;(set-face-attribute 'default nil :family "Verdana")
@@ -174,10 +175,10 @@
 
 (use-package solarized-theme
   :ensure t
-  :defer t
   :config
   (setq solarized-high-contrast-mode-line t)
-  (setq solarized-use-less-bold t))
+  (setq solarized-use-less-bold t)
+  (load-theme 'solarized-light))
 
 
 (use-package vertico
