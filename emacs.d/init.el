@@ -485,6 +485,7 @@ it onto the kill ring"
 				    (not
 				     (or (and (buffer-file-name buf)
 					      (buffer-modified-p buf))
+					 (string= "*scratch*" (buffer-name buf))
 					 (get-buffer-process buf)
 					 (-contains? visible-bufs buf))))))))
     (dolist (buf closeable)
