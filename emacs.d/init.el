@@ -313,10 +313,12 @@ the file, otherwise find the file useing project.el"
 	'((sequence "TODO" "|" "DONE" "CANCELED")))
   (setq org-agenda-files `("~/work/org"
 			   "~/Dropbox/org"))
+  (setq org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages
     'org-babel-load-languages
     '((shell . t)
       ;;(mongo-dev . t)
+      (http . t)
       ))
 
   (add-to-list 'org-export-backends 'md)
@@ -618,6 +620,7 @@ it onto the kill ring"
 (use-package go-mode :ensure t)
 (use-package lua-mode :ensure t)
 (use-package nix-mode :ensure t)
+(use-package ob-http  :ensure t)
 (use-package olivetti :ensure t)
 (use-package prettier-js :ensure t)
 (use-package restclient :ensure t)
