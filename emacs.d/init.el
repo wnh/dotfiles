@@ -603,6 +603,15 @@ it onto the kill ring"
   ;;(setq rcirc-auth-info '(()))
   ;; /msg NickServ IDENTIFY wnh <password>
   )
+
+(defun wnh/jira-go ()
+  (interactive)
+  (let ((id (thing-at-point 'symbol 'no-properties)))
+    (if (string-match (rx (: (or "ITD" "BIN" "PRM" "API") "-" (+ digit))) id)
+	(browse-url (concat "https://taskhuman.atlassian.net/browse/" id))
+      (message "Not a valid ticket: %s" id))))
+(define-key evil-normal-state-map (kbd "g t") #'wnh/jira-go)
+
 (use-package add-node-modules-path :ensure t)
 (use-package dash :ensure t)
 (use-package exec-path-from-shell :ensure t)
