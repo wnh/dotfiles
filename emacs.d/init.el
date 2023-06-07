@@ -55,11 +55,17 @@
      ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
       (setq mac-command-modifier 'meta)
       (global-display-line-numbers-mode -1)
+      ;(set-face-attribute 'default nil :family "Fira Sans")
+      ;(set-face-attribute 'default nil :family "~/.nix-profile/share/fonts/truetype/iosevka-regular.ttf")
+      (set-face-attribute 'default nil :family "Iosevka Term")
+      (set-face-attribute 'default nil :height 80)
+      (set-face-attribute 'default nil :height 80)
+      (set-face-attribute 'tab-bar nil :height 160)
       ;(set-face-attribute 'default nil :family "Verdana")
       ;(set-face-attribute 'default nil :height 110)
       (setq wnh/font-small 110)
       (setq wnh/font-large 130)
-      (setq-default line-spacing 0.7)))
+      (setq-default line-spacing 0.8)))
 
     (setq indent-tabs-mode nil)
 
@@ -557,6 +563,12 @@ it onto the kill ring"
 
 (use-package  lua-mode
   :ensure t)
+(use-package textsize
+  :ensure t
+  :commands textsize-mode
+  :init
+  (setq textsize-default-points 12)
+  (textsize-mode))
 
 
 (defun wnh/wip-clean-buffers ()
