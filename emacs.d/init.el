@@ -39,6 +39,7 @@
     (hl-line-mode 1)
     (global-display-line-numbers-mode 1)
     (global-hl-line-mode 1)
+    (tab-bar-mode 1)
     (cond
      ((string= (system-name) "frmwrk")
       (setq wnh/font-small 85)
@@ -112,15 +113,23 @@
     (define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
     (define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
 
-    (define-key evil-normal-state-map (kbd "C-S-h") #'windmove-swap-states-left)
-    (define-key evil-normal-state-map (kbd "C-S-j") #'windmove-swap-states-down)
-    (define-key evil-normal-state-map (kbd "C-S-k") #'windmove-swap-states-up)
-    (define-key evil-normal-state-map (kbd "C-S-l") #'windmove-swap-states-right)
+    ;(define-key evil-normal-state-map (kbd "C-S-h") #'windmove-swap-states-left)
+    ;(define-key evil-normal-state-map (kbd "C-S-j") #'windmove-swap-states-down)
+    ;(define-key evil-normal-state-map (kbd "C-S-k") #'windmove-swap-states-up)
+    ;(define-key evil-normal-state-map (kbd "C-S-l") #'windmove-swap-states-right)
+
+    (define-key evil-normal-state-map (kbd "C-S-h") #'tab-previous)
+    (define-key evil-normal-state-map (kbd "C-S-j") #'tab-next)
+    (define-key evil-normal-state-map (kbd "C-S-k") #'tab-previous)
+    (define-key evil-normal-state-map (kbd "C-S-l") #'tab-next)
 
     (define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
     (define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
     (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
     (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
+
+    (define-key evil-normal-state-map (kbd "SPC t n") #'tab-next)
+    (define-key evil-normal-state-map (kbd "SPC t p") #'tab-previous)
 
     ;; Fat Fingers
     (evil-ex-define-cmd "W[rite]" #'evil-write)
