@@ -167,8 +167,6 @@
 
     (define-key evil-normal-state-map (kbd "C-S-m") #'wnh/run-q-macro))
 
-(use-package dash
-  :ensure t)
 
 (use-package undo-tree
   :ensure t
@@ -339,9 +337,6 @@ the file, otherwise find the file useing project.el"
     (set-face-attribute 'default nil :height wnh/font-large))
   (setq wnh/font-is-big? (not wnh/font-is-big?)))
 
-;; TODO: Make prettier work
-(use-package exec-path-from-shell
-  :ensure t)
 
 
 (use-package popper
@@ -436,17 +431,6 @@ it onto the kill ring"
   (evil-define-key 'normal inf-clojure-minor-mode-map
     (kbd "C-e") #'inf-clojure-eval-defun))
 
-(use-package go-mode
-  :ensure t)
-
-(use-package restclient
-  :ensure t)
-
-(use-package yaml-mode
-  :ensure t)
-
-(use-package olivetti
-  :ensure t)
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
@@ -479,8 +463,6 @@ it onto the kill ring"
   (add-hook 'markdown-mode #'flyspell-mode)
   (add-hook 'markdown-mode #'auto-fill-mode))
 
-(use-package treemacs
-  :ensure t)
 
 
 (defun wnh/clean-buffers ()
@@ -510,12 +492,9 @@ it onto the kill ring"
 
 
 (use-package dumb-jump
-  :ensure t
+  :load-path "pkg-custom/dumb-jump"
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
-
-(use-package swift-mode
-  :ensure t)
 
 ;; TODO: Get SQL Working better: https://www.youtube.com/watch?v=D97vDu_BhwA
 (use-package sql-indent
@@ -523,16 +502,6 @@ it onto the kill ring"
 (add-hook 'sql-mode-hook
 	  (lambda ()
 	    (setq show-trailing-whitespace t)))
-
-
-;; TODO Figure out the hooks for this
-(use-package prettier-js
-  :ensure t)
-
-(use-package add-node-modules-path
-  :ensure t
-  ;;:hook (js-mode web-mode typescript-mode)
-  )
 
 (use-package typescript-mode
   :ensure t
@@ -558,11 +527,7 @@ it onto the kill ring"
   (evil-define-key 'normal js-mode-map (kbd "C-e") #'nodejs-repl-send-line)
   (evil-define-key 'visual js-mode-map (kbd "C-e") #'nodejs-repl-send-region))
 
-(use-package  nix-mode
-  :ensure t)
 
-(use-package  lua-mode
-  :ensure t)
 (use-package textsize
   :ensure t
   :commands textsize-mode
@@ -638,3 +603,15 @@ it onto the kill ring"
   ;;(setq rcirc-auth-info '(()))
   ;; /msg NickServ IDENTIFY wnh <password>
   )
+(use-package add-node-modules-path :ensure t)
+(use-package dash :ensure t)
+(use-package exec-path-from-shell :ensure t)
+(use-package go-mode :ensure t)
+(use-package lua-mode :ensure t)
+(use-package nix-mode :ensure t)
+(use-package olivetti :ensure t)
+(use-package prettier-js :ensure t)
+(use-package restclient :ensure t)
+(use-package swift-mode :ensure t)
+(use-package treemacs :ensure t)
+(use-package yaml-mode :ensure t)
