@@ -148,6 +148,7 @@
     (define-key evil-normal-state-map (kbd "SPC o i") #'org-clock-in)
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
     (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
+    (define-key evil-normal-state-map (kbd "SPC o j") #'org-clock-goto)
     (define-key evil-normal-state-map (kbd "SPC o a") (lambda ()
 							(interactive)
 							(org-agenda-list 2)))
@@ -492,6 +493,21 @@ it onto the kill ring"
       (kill-buffer buf))
     (message "Cleanded %d buffers" (length closeable))))
 
+(defmacro comment (&rest body)
+  "Comment out one or more s-expressions."
+  nil)
+
+(comment ;; Testing to get *all* of the visibile buffers from *all* of the tabs
+ (->> (tab-bar-tabs)
+      (car)
+      (assoc 'wc-bl)
+      (length))
+
+ (let ((x '()))
+   (walk-windows (lambda (w) (setq x (cons w x))))
+   x)
+
+ (current-window-configuration))
 
 (use-package dumb-jump
   :load-path "pkg-custom/dumb-jump"
