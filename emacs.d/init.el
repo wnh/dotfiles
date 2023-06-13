@@ -546,12 +546,12 @@ it onto the kill ring"
   (evil-define-key 'visual js-mode-map (kbd "C-e") #'nodejs-repl-send-region))
 
 
-(use-package textsize
-  :ensure t
-  :commands textsize-mode
-  :init
-  (setq textsize-default-points 12)
-  (textsize-mode))
+;;(use-package textsize
+;;  :ensure t
+;;  :commands textsize-mode
+;;  :init
+;;  (setq textsize-default-points 12)
+;;  (textsize-mode))
 
 
 (defun wnh/wip-clean-buffers ()
