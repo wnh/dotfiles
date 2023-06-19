@@ -1,5 +1,6 @@
-(setq exec-path
-      (cons "/Users/wharding/.nix-profile/bin" exec-path))
+(defmacro comment (&rest body)
+  "Comment out one or more s-expressions."
+  nil)
 
 (setq ring-bell-function 'ignore)
 (setq custom-file "~/.emacs.d/custom-settings.el")
@@ -53,13 +54,18 @@
       (menu-bar-mode -1)
       (setq-default line-spacing 0.4))
      ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
+      (dolist (dir '("/Users/wharding/.nix-profile/bin"
+		     "/Users/wharding/bin"
+		     "/Users/wharding/work/bin"))
+	(setq exec-path (cons dir exec-path))
+	(setenv "PATH" (concat dir ":" (getenv "PATH"))))
       (setq mac-command-modifier 'meta)
       (global-display-line-numbers-mode -1)
       ;(set-face-attribute 'default nil :family "Fira Sans")
       ;(set-face-attribute 'default nil :family "~/.nix-profile/share/fonts/truetype/iosevka-regular.ttf")
       (set-face-attribute 'default nil :family "Iosevka Term")
       (set-face-attribute 'default nil :height 80)
-      (set-face-attribute 'default nil :height 80)
+      (set-face-attribute 'default nil :height 120)
       (set-face-attribute 'tab-bar nil :height 160)
       ;(set-face-attribute 'default nil :family "Verdana")
       ;(set-face-attribute 'default nil :height 110)
@@ -192,7 +198,7 @@
   :config
   (setq solarized-high-contrast-mode-line t)
   (setq solarized-use-less-bold t)
-  (load-theme 'solarized-light))
+  (comment (load-theme 'solarized-light)))
 
 
 (use-package vertico
@@ -313,7 +319,7 @@ the file, otherwise find the file useing project.el"
   (setq org-todo-keywords
 	'((sequence "TODO" "|" "DONE" "CANCELED")))
   (setq org-agenda-files `("~/work/org"
-			   "~/Dropbox/org"))
+			   "~/work/org/gkroam"))
   (setq org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages
     'org-babel-load-languages
@@ -493,9 +499,6 @@ it onto the kill ring"
       (kill-buffer buf))
     (message "Cleanded %d buffers" (length closeable))))
 
-(defmacro comment (&rest body)
-  "Comment out one or more s-expressions."
-  nil)
 
 (comment ;; Testing to get *all* of the visibile buffers from *all* of the tabs
  (->> (tab-bar-tabs)
