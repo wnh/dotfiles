@@ -1,9 +1,8 @@
 
 set nocompatible              " be iMproved, required
 set timeoutlen=50
-"set t_Co=256 
-"let base16colorspace=256
-syntax off
+set t_Co=0 
+syntax on
 
 set backupdir=~/.vim/_backup/,.backup/,/tmp//
 set directory=~/.vim/_swp/,.swp/,/tmp//
@@ -25,10 +24,6 @@ execute pathogen#infect()
 let g:airline_left_sep  = ' ' " remove annoying custom patched font requrements for airline
 let g:airline_right_sep = ' '
 
-"colorscheme base16-default-dark
-"let g:airline_theme='base16'
-
-set background=dark 
 set laststatus=2 " always show the status line
 
 set diffopt+=vertical
