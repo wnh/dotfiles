@@ -40,6 +40,8 @@
     (global-display-line-numbers-mode 1)
     (global-hl-line-mode 1)
     (tab-bar-mode 1)
+    (setq-default notmuch-search-oldest-first nil)
+
     (cond
      ;;;;; Framework - Linux ;;;;;
      ((string= (system-name) "frmwrk")
@@ -655,6 +657,56 @@ it onto the kill ring"
 (use-package swift-mode :ensure t)
 (use-package treemacs :ensure t)
 (use-package yaml-mode :ensure t)
+
+(use-package notmuch
+  :ensure t
+  :init
+  (setq send-mail-function #'sendmail-send-it)
+  (setq sendmail-program "gmail-send")
+	
+  (defun wnh/notmuch-delete ()
+    (interactive)
+    (notmuch-show-tag '("-inbox" "+trash"))
+    (notmuch-show-next-thread-show))
+
+  (defun wnh/gmail ()
+    (interactive)
+    (let ((buf (get-buffer-create "*gmail-sync*")))
+      (async-shell-command "gmail-sync" buf)
+      (with-current-buffer buf
+	(evil-normal-state))))
+
+  ;; :bind (:map notmuch-show-mode-map
+  ;; 	      ("SPC d" . #'wnh/notmuch-delete))
+  :config
+  (evil-define-key 'normal notmuch-show-mode-map
+    (kbd "SPC d")  #'wnh/notmuch-delete))
+
 (use-package rc-mode
   :ensure t)
 
+(defun org-notmuch-open (id)
+  "Visit the notmuch message or thread with id ID."
+  (notmuch-show id))
+
+(defun org-notmuch-store-link ()
+  "Store a link to a notmuch mail message."
+  (case major-mode
+    ('notmuch-show-mode
+     ;; Store link to the current message
+     (let* ((id (notmuch-show-get-message-id))
+	    (link (concat "notmuch:" id))
+	    (description (format "Mail: %s" (notmuch-show-get-subject))))
+       (org-store-link-props
+	:type "notmuch"
+	:link link
+	:description description)))
+    ('notmuch-search-mode
+     ;; Store link to the thread on the current line
+     (let* ((id (notmuch-search-find-thread-id))
+	    (link (concat "notmuch:" id))
+	    (description (format "Mail: %s" (notmuch-search-find-subject))))
+       (org-store-link-props
+	:type "notmuch"
+	:link link
+	:description description)))))
