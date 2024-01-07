@@ -107,6 +107,11 @@
   (interactive)
   (evil-execute-macro 1 (evil-get-register ?q)))
 
+(defun wnh/comint-mongo-mirror ()
+  (interactive)
+  (comint-run "/Users/wharding/.nix-profile/bin/mongosh"
+	      '("--quiet"
+	      "mongodb://localhost/TaskHumanMirror")))
 
 (use-package evil
   :ensure t
@@ -118,6 +123,7 @@
 
     (evil-define-key 'normal emacs-lisp-mode-map (kbd "C-e") #'eval-defun)
 
+    (evil-define-key 'normal js-mode-map (kbd "C-e") #'nodejs-repl-send-line)
     (define-key evil-visual-state-map (kbd "TAB") #'indent-region)
 
     ;; Easier on the Mac where my Meta Key has changed
@@ -265,10 +271,20 @@ the file, otherwise find the file useing project.el"
 	(interactive)
 	(gkroam-find "todo")))
 
-    (define-key evil-insert-state-map (kbd "C-S-l") #'gkroam-insert)
+    (defun wnh/gkroam-insert-link ()
+      (interactive)
+      (let* ((title (completing-read
+                     "Choose a page or create a new: "
+                     (gkroam-retrive-all-titles) nil nil)))
+	(gkroam-insert title "" t)))
+
+    ;;(define-key evil-insert-state-map (kbd "C-S-l") #'gkroam-insert)
+
     :config
+    ;;(evil-define-key 'insert gkroam-mode-map
+    ;;  (kbd "C-S-l") #'gkroam-insert)
     (evil-define-key 'insert gkroam-mode-map
-      (kbd "C-S-l") #'gkroam-insert)
+      (kbd "C-S-l") #'wnh/gkroam-insert-link)
 
     ;;(add-hook 'gkroam-mode-hook
     ;;          (lambda ()
@@ -460,7 +476,7 @@ it onto the kill ring"
 (define-key evil-normal-state-map (kbd "SPC q") #'indent-region)
 
 (defun org-babel-execute:mongo-dev (body params)
-  (stringp body))
+  params)
 
 (evil-define-key 'normal shell-mode-map
   (kbd "SPC c") #'comint-clear-buffer)
@@ -636,12 +652,18 @@ it onto the kill ring"
   ;; /msg NickServ IDENTIFY wnh <password>
   )
 
+(defun wnh/jira-list ()
+  (interactive)
+  (async-shell-command "~/opt/src/jira-cli/jira"  "*jira tickets*"))
+
 (defun wnh/jira-go ()
   (interactive)
   (let ((id (thing-at-point 'symbol 'no-properties)))
-    (if (string-match (rx (: (or "ITD" "BIN" "PRM" "API") "-" (+ digit))) id)
-	(browse-url (concat "https://taskhuman.atlassian.net/browse/" id))
+    (if (string-match (rx (: (or "ITD" "BIN" "PRM" "PM" "API") "-" (+ digit))) id)
+	;;(browse-url (concat "https://taskhuman.atlassian.net/browse/" id))
+	(async-shell-command (concat "~/opt/src/jira-cli/jira " id) (concat "*jira " id "*"))
       (message "Not a valid ticket: %s" id))))
+
 (define-key evil-normal-state-map (kbd "g t") #'wnh/jira-go)
 
 (use-package add-node-modules-path :ensure t)
@@ -684,6 +706,57 @@ it onto the kill ring"
 
 (use-package rc-mode
   :ensure t)
+
+
+
+;;;; Open the shell for a project
+;;(let ((default-directory "~/work/src/b/itd-1019/API"))
+;;  (project-shell))
+;;
+;;;;  Not working - Try to spawn a new tab with certain name without
+;;;;  switching to it
+;;(let ((current-tab (tab-bar--current-tab-index)))
+;;  (tab-new)
+;;  (tab-rename "the new one")
+;;  (tab-select current-tab))
+;;
+
+
+(defun wnh/launch-branch ()
+  (interactive)
+  (let* ((base  "~/work/src/b")
+	 (branch-name
+	  (completing-read 
+	   "pick a dir: "
+	   (let ()
+	     (->> (directory-files base)
+		  (-filter (lambda (f)
+			     (and (file-directory-p (concat base "/" f))
+				  (string-match "^itd-" f))))))))
+	 (branch-dir (concat base "/" branch-name))
+	 (dirs '(("API" . "API")
+		 ("Web" . "Website")
+ 		 ("Internal" . "th_internal_tools_api")
+ 		 ("Models" . "th_js_mongoModels"))))
+    (dolist (d dirs)
+      (tab-new)
+      (tab-rename (car d))
+      (let ((default-directory (concat branch-dir "/" (cdr d))))
+	(project-shell)))))
+
+
+;;;; Make it possible to copy email message IDs into notmuch links so that 
+;;;;; from https://gist.github.com/fedxa/fac592424473f1b70ea489cc64e08911
+(defun wnh/copy-email-id ()
+    (interactive)
+    (kill-new
+     (concat "[[notmuch:" (notmuch-show-get-message-id) "]"
+	     "[" (notmuch-show-get-subject) "]]")))
+
+(org-link-set-parameters "notmuch"
+			 :follow #'org-notmuch-open
+			 ;; :store 'org-notmuch-store-link
+			 )
 
 (defun org-notmuch-open (id)
   "Visit the notmuch message or thread with id ID."
