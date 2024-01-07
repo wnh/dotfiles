@@ -1,6 +1,5 @@
 (defmacro comment (&rest body)
-  "Comment out one or more s-expressions."
-  nil)
+  "Comment out one or more s-expressions." nil)
 
 (setq ring-bell-function 'ignore)
 (setq custom-file "~/.emacs.d/custom-settings.el")
@@ -42,23 +41,30 @@
     (global-hl-line-mode 1)
     (tab-bar-mode 1)
     (cond
+     ;;;;; Framework - Linux ;;;;;
      ((string= (system-name) "frmwrk")
       (setq wnh/font-small 85)
       (setq wnh/font-large 110)
       (menu-bar-mode -1)
       (set-face-attribute 'default nil :family "DejaVu Sans")
       (setq-default line-spacing 0.6))
+
+     ;;;;; X1 Carbon - Linux ;;;;;
      ((string= (system-name) "x1")
       (setq wnh/font-small 90)
       (setq wnh/font-large 110)
       (menu-bar-mode -1)
       (setq-default line-spacing 0.4))
+
+     ;;;;; Work MacBook - MacOS ;;;;;
      ((string= system-type  "darwin")   ;"Wills-MBP.localdomain"
       (dolist (dir '("/Users/wharding/.nix-profile/bin"
+		     "/opt/homebrew/bin"
 		     "/Users/wharding/bin"
 		     "/Users/wharding/work/bin"))
 	(setq exec-path (cons dir exec-path))
 	(setenv "PATH" (concat dir ":" (getenv "PATH"))))
+
       (setq mac-command-modifier 'meta)
       (global-display-line-numbers-mode -1)
       ;(set-face-attribute 'default nil :family "Fira Sans")
@@ -71,7 +77,8 @@
       ;(set-face-attribute 'default nil :height 110)
       (setq wnh/font-small 110)
       (setq wnh/font-large 130)
-      (setq-default line-spacing 0.8)))
+      (setq-default line-spacing 0.8)
+      (load-theme 'modus-operandi)))
 
     (setq indent-tabs-mode nil)
 
@@ -108,6 +115,8 @@
     (evil-mode 1)
 
     (evil-define-key 'normal emacs-lisp-mode-map (kbd "C-e") #'eval-defun)
+
+    (define-key evil-visual-state-map (kbd "TAB") #'indent-region)
 
     ;; Easier on the Mac where my Meta Key has changed
     (define-key evil-normal-state-map (kbd "C-x C-m") #'execute-extended-command)
@@ -646,3 +655,6 @@ it onto the kill ring"
 (use-package swift-mode :ensure t)
 (use-package treemacs :ensure t)
 (use-package yaml-mode :ensure t)
+(use-package rc-mode
+  :ensure t)
+
