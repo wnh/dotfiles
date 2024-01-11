@@ -71,7 +71,8 @@ end
 
 function obj:reset()
   local items = {
-    { title = "Start", fn = function() self:start() end }
+    { title = "Start Pomo", fn = function() self:setDuration(25); self:start() end },
+    { title = "Short Break", fn = function() self:setDuration(5); self:start() end }
   }
   self.menu:setMenu(items)
   self.menu:setTitle("🍒")
@@ -148,6 +149,9 @@ function obj:start(resume)
   self.menu:setMenu(items)
 end
 
+function obj:setDuration(mins)
+   self.duration = mins
+end
 
 function obj:pause()
   self.timerRunning = false
