@@ -65,6 +65,8 @@
 		     "/Users/wharding/bin"
 		     "/Users/wharding/work/bin"))
 	(setq exec-path (cons dir exec-path))
+	(setq user-mail-address "will@taskhuman.com")
+	(setq user-full-name "Will Harding")
 	(setenv "PATH" (concat dir ":" (getenv "PATH"))))
 
       (setq mac-command-modifier 'meta)
@@ -688,7 +690,12 @@ it onto the kill ring"
 	
   (defun wnh/notmuch-delete ()
     (interactive)
-    (notmuch-show-tag '("-inbox" "+trash"))
+    (notmuch-show-tag-all '("-inbox" "+trash"))
+    (notmuch-show-next-thread-show))
+
+  (defun wnh/notmuch-archive ()
+    (interactive)
+    (notmuch-show-tag-all '("-inbox" "-new"))
     (notmuch-show-next-thread-show))
 
   (defun wnh/gmail ()
@@ -702,7 +709,8 @@ it onto the kill ring"
   ;; 	      ("SPC d" . #'wnh/notmuch-delete))
   :config
   (evil-define-key 'normal notmuch-show-mode-map
-    (kbd "SPC d")  #'wnh/notmuch-delete))
+    (kbd "SPC d")  #'wnh/notmuch-delete
+    (kbd "SPC a")  #'wnh/notmuch-archive))
 
 (use-package rc-mode
   :ensure t)
