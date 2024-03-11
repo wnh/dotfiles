@@ -246,10 +246,11 @@ the file, otherwise find the file useing project.el"
       (gkroam-find)
     (project-find-file))))
 
-(defun wnh/working-mem-file ()
+(defun wnh/org-week-notes ()
   (interactive)
-  (gkroam-find "WorkingMem")
+  (gkroam-find (format-time-string "%Yw%V"))
   (end-of-buffer))
+
 
 (defun wnh/todo-file ()
   (interactive)
@@ -264,8 +265,8 @@ the file, otherwise find the file useing project.el"
 	  gkroam-show-brackets-p t
 	  gkroam-use-default-filename t
 	  gkroam-window-margin 4)
-    (define-key evil-normal-state-map (kbd "SPC o d") #'gkroam-daily)
-    (define-key evil-normal-state-map (kbd "SPC o w") #'wnh/working-mem-file)
+    (define-key evil-normal-state-map (kbd "SPC o d") #'wnh/org-week-notes) ; was: #'gkroam-daily
+    (define-key evil-normal-state-map (kbd "SPC o w") #'wnh/org-week-notes)
     (define-key evil-normal-state-map (kbd "SPC o t") #'wnh/todo-file)
     (define-key evil-normal-state-map (kbd "SPC o f") #'gkroam-find)
 
@@ -793,3 +794,19 @@ it onto the kill ring"
 	:type "notmuch"
 	:link link
 	:description description)))))
+
+
+(defun wnh/open-journal-today ()
+  (interactive)
+  (let* ((file-name (concat "~/Dropbox (Maestral)/journal/"
+			    (format-time-string "%Y-%m-%d")
+			    ".txt"))
+	 (header (format-time-string "%a %d %b %Y"))
+	 (buf (find-file file-name)))
+    (with-current-buffer buf
+      (if (file-exists-p file-name)
+	  (set-window-point (get-buffer-window buf) (point-max))
+	(insert header "\n\n")))))
+
+(define-key evil-normal-state-map (kbd "SPC w j") #'wnh/open-journal-today)
+
