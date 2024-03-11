@@ -362,7 +362,13 @@ the file, otherwise find the file useing project.el"
   (add-to-list 'org-export-backends 'md)
   (add-hook 'org-mode-hook #'flyspell-mode)
   (add-hook 'org-mode-hook #'auto-fill-mode)
-  (setq org-default-notes-file "~/work/org/INBOX.org"))
+  (setq org-default-notes-file "~/work/org/INBOX.org")
+  (setq org-capture-templates
+	'(("t" "Todo" entry (file+headline "/Users/wharding/work/org/work.org" "TODOS")
+           "* TODO %?\n%a\n%i"
+	   :prepend t)))
+
+  )
 
 ;;
 ;; FONT STUFF
@@ -742,8 +748,7 @@ it onto the kill ring"
 	   (let ()
 	     (->> (directory-files base)
 		  (-filter (lambda (f)
-			     (and (file-directory-p (concat base "/" f))
-				  (string-match "^itd-" f))))))))
+			     (file-directory-p (concat base "/" f))))))))
 	 (branch-dir (concat base "/" branch-name))
 	 (dirs '(("API" . "API")
 		 ("Web" . "Website")
