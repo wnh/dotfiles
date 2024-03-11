@@ -53,7 +53,8 @@ hs.hotkey.bind({"cmd"}, "1", function()
 end)
 
 hs.hotkey.bind({"cmd"}, "2", function()
-  emacs = hs.appfinder.appFromName("emacs")
+  -- emacs = hs.appfinder.appFromName("emacs")
+  emacs = hs.application.find("emacs")
   print("Emacs?:", emacs)
   if emacs ~= nil then
     emacs:setFrontmost()
