@@ -76,7 +76,7 @@
       (set-face-attribute 'default nil :family "Iosevka Term")
       (set-face-attribute 'default nil :height 80)
       (set-face-attribute 'default nil :height 120)
-      (set-face-attribute 'tab-bar nil :height 160)
+      ;(set-face-attribute 'tab-bar nil :height 160)
       ;(set-face-attribute 'default nil :family "Verdana")
       ;(set-face-attribute 'default nil :height 110)
       (setq wnh/font-small 110)
@@ -174,6 +174,7 @@
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
     (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
     (define-key evil-normal-state-map (kbd "SPC o j") #'org-clock-goto)
+    (define-key evil-normal-state-map (kbd "SPC o c") #'org-capture)
     (define-key evil-normal-state-map (kbd "SPC o a") (lambda ()
 							(interactive)
 							(org-agenda-list 2)))
@@ -542,7 +543,8 @@ it onto the kill ring"
  (current-window-configuration))
 
 (use-package dumb-jump
-  :load-path "pkg-custom/dumb-jump"
+  ; :load-path "pkg-custom/dumb-jump"
+  :ensure t
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
