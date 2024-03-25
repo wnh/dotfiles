@@ -59,12 +59,12 @@ hs.hotkey.bind({"cmd"}, "2", function()
   if emacs ~= nil then
     emacs:setFrontmost()
   else
-    hs.application.launchOrFocus("/Users/wharding/.nix-profile/Applications/Emacs.app")
+    hs.application.launchOrFocus("/Applications/Emacs.app")
   end
 end)
 
 hs.hotkey.bind({"cmd"}, "3", function()
-  hs.application.launchOrFocus("/Users/wharding/.nix-profile/Applications/kitty.app")
+  hs.application.launchOrFocus("/Applications/iTerm.app")
 end)
 
 hs.hotkey.bind({"cmd"}, "4", function()
@@ -72,7 +72,7 @@ hs.hotkey.bind({"cmd"}, "4", function()
   if app ~= nil then
     app:setFrontmost()
   else
-    hs.application.launchOrFocus("/Users/wharding/.nix-profile/Applications/VSCodium.app")
+    hs.application.launchOrFocus("/Applications/VSCodium.app")
   end
 end)
 
