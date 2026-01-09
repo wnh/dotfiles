@@ -1,15 +1,14 @@
 {
-    "workbench.colorTheme": "Default Light Modern",
     "editor.minimap.enabled": false,
     "editor.tokenColorCustomizations": {},
     "editor.lineNumbers": "off",
-    "editor.lineHeight": 1.8,
+    "editor.lineHeight": 1.9,
     "terminal.integrated.lineHeight": 1.8,
-    "terminal.integrated.fontSize": 11.5,
+    "terminal.integrated.fontSize": 12,
     "window.customTitleBarVisibility": "auto",
     "workbench.activityBar.location": "top",
     "window.zoomLevel": 0.6,
-    "editor.fontSize": 11.5,
+    "editor.fontSize": 12,
     "[vue]": {
         "editor.defaultFormatter": "Vue.volar"
     },
@@ -17,5 +16,16 @@
     "python.experiments.enabled": false,
     "python.venvPath": "${workspaceFolder}/.env",
     "editor.wordWrap": "on",
-    "diffEditor.renderSideBySide": false
+    "diffEditor.renderSideBySide": false,
+    "editor.fontFamily": "'Iosevka Term', 'Droid Sans Mono', 'monospace', monospace",
+    "chat.agent.enabled": false,
+    "window.titleBarStyle": "native",
+    "window.dialogStyle": "custom",
+    "workbench.colorTheme": "Default Light Modern",
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.inlineSuggest.enabled": false,
+    "editor.quickSuggestionsDelay": 0,
+    "terminal.integrated.defaultLocation": "editor",
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled": false
 }
