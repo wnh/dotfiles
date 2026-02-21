@@ -820,31 +820,6 @@ it onto the kill ring"
 (use-package notmuch
   :ensure t)
 
-
-;;; VantEdge stuff
-(use-package mermaid-mode
-  :ensure t)
-(use-package vue-mode
-  :ensure t)
-
-;;'( ADO:1231 )
-;; #1234
-(defun wnh/vantedge-goto-ticket ()
-  (interactive)
-  (let* ((sym (thing-at-point 'word t))
-	 (ado? (s-starts-with? "ado-" sym t)))
-    (if ado?
-	(let ((num (substring sym 4)))
-	  (browse-url (concat "https://dev.azure.com/VantedgeLGX/Wheelhouse/_workitems/edit/" num "/")))
-	(message "%s" "Dunno what that is???"))))
-
-(define-key evil-normal-state-map (kbd "g t") #'wnh/vantedge-goto-ticket)
-(defun wnh/vantedge-open-log ()
-  (interactive)
-  (find-file "~/work/log.org"))
-
-(define-key evil-normal-state-map (kbd "SPC o l") #'wnh/vantedge-open-log)
-
 (use-package scala-mode
   :ensure t)
 
