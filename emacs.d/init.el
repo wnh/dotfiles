@@ -5,6 +5,8 @@
 (setq custom-file "~/.emacs.d/custom-settings.el")
 (load custom-file t)
 
+(load "~/.emacs.d/wnh-secrets.el")
+
 (require 'package)
 
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
@@ -45,10 +47,16 @@
     (cond
      ;;;;; Framework - Linux ;;;;;
      ((string= (system-name) "frmwrk")
-      (setq wnh/font-small 85)
+      (menu-bar-mode 1)
+      (setq wnh/font-small 100)
       (setq wnh/font-large 110)
       (menu-bar-mode -1)
       (set-face-attribute 'default nil :family "DejaVu Sans")
+      ;(load-theme 'solarized-light)
+      (load-theme 'modus-operandi)
+
+      (global-display-line-numbers-mode 0)
+      ;(set-face-attribute 'default nil :family "DejaVu Sans")
       (setq-default line-spacing 0.6))
 
      ;;;;; X1 Carbon - Linux ;;;;;
@@ -115,6 +123,10 @@
 	      '("--quiet"
 	      "mongodb://localhost/TaskHumanMirror")))
 
+(defun wnh/capture-log ()
+  (interactive)
+  (org-capture :keys "L"))
+
 (use-package evil
   :ensure t
   :init
@@ -127,6 +139,9 @@
 
     (evil-define-key 'normal js-mode-map (kbd "C-e") #'nodejs-repl-send-line)
     (define-key evil-visual-state-map (kbd "TAB") #'indent-region)
+
+    (evil-define-key 'normal shell-mode-map (kbd "C-p") #'wnh/ctrl-p)
+    (evil-define-key 'insert shell-mode-map (kbd "C-p") #'comint-previous-input)
 
     ;; Easier on the Mac where my Meta Key has changed
     (define-key evil-normal-state-map (kbd "C-x C-m") #'execute-extended-command)
@@ -172,12 +187,21 @@
     ;; org-mode
     (define-key evil-normal-state-map (kbd "SPC o i") #'org-clock-in)
     (define-key evil-normal-state-map (kbd "SPC o o") #'org-clock-out)
-    (define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
-    (define-key evil-normal-state-map (kbd "SPC o j") #'org-clock-goto)
+
+
+    ;; Taken for my vantedge work log - havent been timetracking that much anyway
+    ;;(define-key evil-normal-state-map (kbd "SPC o l") #'org-clock-in-last)
+    (define-key evil-normal-state-map (kbd "SPC o L") #'wnh/capture-log)
     (define-key evil-normal-state-map (kbd "SPC o c") #'org-capture)
+    (define-key evil-normal-state-map (kbd "SPC o A") #'org-agenda)
+    (define-key evil-normal-state-map (kbd "SPC o j") #'org-clock-goto)
+
     (define-key evil-normal-state-map (kbd "SPC o a") (lambda ()
 							(interactive)
-							(org-agenda-list 2)))
+							(org-agenda nil "y")))
+
+    (define-key evil-normal-state-map (kbd "SPC o w") #'wnh/working-mem-file)
+    (define-key evil-normal-state-map (kbd "SPC o t") #'wnh/todo-file)
 
     (defun wnh/save-advice (&rest r)
       (save-buffer))
@@ -207,20 +231,6 @@
   :after evil
   :config (evil-collection-init))
 
-
-(use-package spacemacs-theme
-  :disabled t
-  :ensure t
-  :defer t)
-
-(use-package solarized-theme
-  :ensure t
-  :config
-  (setq solarized-high-contrast-mode-line t)
-  (setq solarized-use-less-bold t)
-  (comment (load-theme 'solarized-light)))
-
-
 (use-package vertico
   :ensure t
   :init (vertico-mode 1))
@@ -248,53 +258,13 @@ the file, otherwise find the file useing project.el"
 
 (defun wnh/org-week-notes ()
   (interactive)
-  (gkroam-find (format-time-string "%Yw%V"))
+  (find-file "~/Dropbox/org/working-mem.org")
   (end-of-buffer))
 
 
 (defun wnh/todo-file ()
   (interactive)
-  (gkroam-find "todo"))
-
-(use-package gkroam
-  :ensure t
-  :hook (after-init . gkroam-mode)
-  :init
-    (setq gkroam-root-dir "~/work/org/gkroam"
-	  gkroam-prettyify-page-p t
-	  gkroam-show-brackets-p t
-	  gkroam-use-default-filename t
-	  gkroam-window-margin 4)
-    (define-key evil-normal-state-map (kbd "SPC o d") #'wnh/org-week-notes) ; was: #'gkroam-daily
-    (define-key evil-normal-state-map (kbd "SPC o w") #'wnh/org-week-notes)
-    (define-key evil-normal-state-map (kbd "SPC o t") #'wnh/todo-file)
-    (define-key evil-normal-state-map (kbd "SPC o f") #'gkroam-find)
-
-    (define-key evil-normal-state-map (kbd "SPC o t")
-      (lambda ()
-	(interactive)
-	(gkroam-find "todo")))
-
-    (defun wnh/gkroam-insert-link ()
-      (interactive)
-      (let* ((title (completing-read
-                     "Choose a page or create a new: "
-                     (gkroam-retrive-all-titles) nil nil)))
-	(gkroam-insert title "" t)))
-
-    ;;(define-key evil-insert-state-map (kbd "C-S-l") #'gkroam-insert)
-
-    :config
-    ;;(evil-define-key 'insert gkroam-mode-map
-    ;;  (kbd "C-S-l") #'gkroam-insert)
-    (evil-define-key 'insert gkroam-mode-map
-      (kbd "C-S-l") #'wnh/gkroam-insert-link)
-
-    ;;(add-hook 'gkroam-mode-hook
-    ;;          (lambda ()
-    ;;		(evil-local-set-key 'normal (kbd "C-p") #'gkroam-find)))
-
-    (add-hook 'gkroam-mode-hook 'flyspell-mode))
+  (find-file "~/Dropbox/org/para.org"))
 
 ;;(defvar wnh/project-list '("~/work/src/API"
 ;;			   "~/work/src/Website"))
@@ -327,7 +297,7 @@ the file, otherwise find the file useing project.el"
 
   (rg-define-search wnh/rg-project-js
     :query ask
-    :files "js"
+    :files "py"
     :dir project)
 
   (define-key evil-normal-state-map (kbd "SPC s") #'rg-project)
@@ -348,16 +318,46 @@ the file, otherwise find the file useing project.el"
   (setq org-adapt-indentation nil)
   (setq org-tags-column 0)
   (setq org-todo-keywords
-	'((sequence "TODO" "|" "DONE" "CANCELED")))
-  (setq org-agenda-files `("~/work/org"
-			   "~/work/org/gkroam"))
+	'((sequence "TODO" "NEXT" "|" "DONE" "CANCELED")))
   (setq org-confirm-babel-evaluate nil)
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((shell . t)
-      ;;(mongo-dev . t)
-      (http . t)
-      ))
+  (setq wnh/org-para-file "~/Dropbox/org/para.org")
+  (setq org-default-notes-file wnh/org-para-file)
+  (setq org-agenda-files `(,wnh/org-para-file
+			   "~/Dropbox/org/inbox_mobile.org"
+			   "~/Dropbox/org/routines.org"
+			   "~/Dropbox/org/brain.org"
+			   "~/Dropbox/org/external.org"
+			   "~/Dropbox/org/mind.org"
+			   "~/Dropbox/org/proj.org"))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline wnh/org-para-file "Inbox")
+           "* TODO %?\n  %i\n  %a")
+	  ("w" "Work" entry (file+headline "~/work/log.org" "Tasks")
+           "* TODO %?\nCREATED: %u")
+	  ("j" "Journal" entry (file+headline "~/Dropbox/org/journal.org" "New")
+           "* %u %?")
+	  ("L" "Work Log" entry (file+olp+datetree "~/Dropbox/org/WorkingJournal.org")
+           "* %U  %?" :tree-type week)))
+
+  (setq org-agenda-custom-commands
+	'(("y" "Today + Next Actions"
+	   ((agenda 1)
+	    (todo "NEXT")))
+	  ("i" "Custom test"
+	   ((org-ql-block '(and (todo "TODO")
+				(not (tags "recurring"))
+				(not (effort))))))))
+
+  (setq org-refile-targets
+	`((wnh/org-para-file . (:tag . "Proj"))
+	  (wnh/org-para-file . (:tag . "Area"))))
+
+  ;; TODO (org-babel-do-load-languages
+  ;; TODO   'org-babel-load-languages
+  ;; TODO   '((shell . t)
+  ;; TODO     ;;(mongo-dev . t)
+  ;; TODO     (http . t)
+  ;; TODO     ))
 
   (add-to-list 'org-export-backends 'md)
   (add-hook 'org-mode-hook #'flyspell-mode)
@@ -369,6 +369,9 @@ the file, otherwise find the file useing project.el"
 	   :prepend t)))
 
   )
+
+(use-package org-ql
+  :ensure t)
 
 ;;
 ;; FONT STUFF
@@ -383,26 +386,6 @@ the file, otherwise find the file useing project.el"
     (set-face-attribute 'default nil :height wnh/font-large))
   (setq wnh/font-is-big? (not wnh/font-is-big?)))
 
-
-
-(use-package popper
-  :ensure t
-  :bind (("C-\\" . popper-toggle-latest)
-	 ("C-|" . popper-cycle))
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          "\\*eldoc\\*"
-          "\\*xref\\*"
-          ;;"\\*rg\\*" ;; this is kinda weird now
-          help-mode
-          ;;compilation-mode
-	  ;;shell-mode
-	  ))
-  (popper-mode +1)
-  (popper-echo-mode +1))
 
 (use-package eglot
   :ensure t
@@ -477,6 +460,20 @@ it onto the kill ring"
   (evil-define-key 'normal inf-clojure-minor-mode-map
     (kbd "C-e") #'inf-clojure-eval-defun))
 
+(use-package go-mode
+  :ensure t
+  :config
+  (add-hook 'before-save-hook #'gofmt-before-save))
+
+
+(use-package restclient
+  :ensure t)
+
+(use-package yaml-mode
+  :ensure t)
+
+(use-package olivetti
+  :ensure t)
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
@@ -511,6 +508,7 @@ it onto the kill ring"
 
 
 
+(setq wnh/buffer-keepers '("*scratch*"))
 (defun wnh/clean-buffers ()
   "Clean up the million buffer that you totally have
 
@@ -645,6 +643,7 @@ it onto the kill ring"
        (completing-read "Pick one: ")))
 
 
+
 ;; (load-file "~/tmp/xah-fly-keys.el")
 ;; (evil-mode -1)
 ;;
@@ -655,27 +654,15 @@ it onto the kill ring"
 
 (use-package rcirc
   :config
-  (setq rcirc-server-alist '(("irc.libera.chat"
-			      :nick "wnh"
-			      :username "wnh"
-			      :channels ("#openbsd"))))
-  ;;(setq rcirc-auth-info '(()))
-  ;; /msg NickServ IDENTIFY wnh <password>
+  (setq rcirc-server-alist
+	'(("irc.libera.chat"
+	   :nick "wnh"
+	   :username "wnh"
+	   :channels ("#openbsd"))))
+  (rcirc-track-minor-mode 1)
+  (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY"))
+  (setq rcirc-authinfo '(("irc.libera.chat" nickserv "wnh" wnh/libera-chat-password)))
   )
-
-(defun wnh/jira-list ()
-  (interactive)
-  (async-shell-command "~/opt/src/jira-cli/jira"  "*jira tickets*"))
-
-(defun wnh/jira-go ()
-  (interactive)
-  (let ((id (thing-at-point 'symbol 'no-properties)))
-    (if (string-match (rx (: (or "ITD" "BIN" "PRM" "PM" "API") "-" (+ digit))) id)
-	;;(browse-url (concat "https://taskhuman.atlassian.net/browse/" id))
-	(async-shell-command (concat "~/opt/src/jira-cli/jira " id) (concat "*jira " id "*"))
-      (message "Not a valid ticket: %s" id))))
-
-(define-key evil-normal-state-map (kbd "g t") #'wnh/jira-go)
 
 (use-package add-node-modules-path :ensure t)
 (use-package dash :ensure t)
@@ -815,3 +802,53 @@ it onto the kill ring"
 
 (define-key evil-normal-state-map (kbd "SPC w j") #'wnh/open-journal-today)
 
+(use-package scheme-mode
+  :bind (:map scheme-mode-map
+	      ("C-e" . xscheme-send-definition)))
+
+(setq notmuch-search-oldest-first nil)
+
+(use-package elfeed
+  :ensure t
+  :config
+  (setq elfeed-feeds
+	'(("http://nullprogram.com/feed/" software)
+          ("https://planet.emacslife.com/atom.xml" software emacs)
+	  ("https://www.robinsloan.com/feed.xml" books software)
+	  ("https://joshondesign.com/feed" software design))))
+
+(use-package notmuch
+  :ensure t)
+
+
+;;; VantEdge stuff
+(use-package mermaid-mode
+  :ensure t)
+(use-package vue-mode
+  :ensure t)
+
+;;'( ADO:1231 )
+;; #1234
+(defun wnh/vantedge-goto-ticket ()
+  (interactive)
+  (let* ((sym (thing-at-point 'word t))
+	 (ado? (s-starts-with? "ado-" sym t)))
+    (if ado?
+	(let ((num (substring sym 4)))
+	  (browse-url (concat "https://dev.azure.com/VantedgeLGX/Wheelhouse/_workitems/edit/" num "/")))
+	(message "%s" "Dunno what that is???"))))
+
+(define-key evil-normal-state-map (kbd "g t") #'wnh/vantedge-goto-ticket)
+(defun wnh/vantedge-open-log ()
+  (interactive)
+  (find-file "~/work/log.org"))
+
+(define-key evil-normal-state-map (kbd "SPC o l") #'wnh/vantedge-open-log)
+
+(use-package scala-mode
+  :ensure t)
+
+(use-package tuareg
+  :ensure t)
+(use-package reason-mode
+  :ensure t)
