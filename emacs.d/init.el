@@ -575,9 +575,6 @@ it onto the kill ring"
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2))
 
-(use-package bigquery-mode
-  :load-path "pkg-custom/bigquery-mode")
-
 (use-package nodejs-repl
   :ensure t
   :config
