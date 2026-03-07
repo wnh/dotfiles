@@ -9,13 +9,13 @@
 
 (require 'package)
 
-(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")))
-
-(package-initialize)
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;(setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
+;			 ("melpa" . "https://melpa.org/packages/")))
+;
+;(package-initialize)
+;(unless (package-installed-p 'use-package)
+;  (package-refresh-contents)
+;  (package-install 'use-package))
 
 ;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
 (custom-set-variables
@@ -127,8 +127,13 @@
   (interactive)
   (org-capture :keys "L"))
 
+
+(defun wnh/working-mem-file ()
+  (interactive)
+  (find-file "~/Dropbox/org/working-mem.org"))
+
 (use-package evil
-  :ensure t
+  ;; :ensure t
   :init
     (setq evil-want-keybinding nil)
     (setq evil-want-C-u-scroll t)
@@ -220,30 +225,30 @@
 
 
 (use-package undo-tree
-  :ensure t
+  ;; :ensure t
   :after evil
   :config
   (evil-set-undo-system 'undo-tree)
   (global-undo-tree-mode 1))
 
 (use-package evil-collection
-  :ensure t
+  ;; :ensure t
   :after evil
   :config (evil-collection-init))
 
 (use-package vertico
-  :ensure t
+  ;; :ensure t
   :init (vertico-mode 1))
 
 (use-package orderless
-  :ensure t
+  ;; :ensure t
   :config
   (setq completion-styles '(orderless)
 	completion-category-defaults nil
 	completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package marginalia
-  :ensure t
+  ;; :ensure t
   :init (marginalia-mode 1))
 
 (defun wnh/ctrl-p ()
@@ -292,7 +297,7 @@ the file, otherwise find the file useing project.el"
 				  (magit "Magit" ?g))))
 
 (use-package rg
-  :ensure t
+  ;; :ensure t
   :config
 
   (rg-define-search wnh/rg-project-js
@@ -304,7 +309,7 @@ the file, otherwise find the file useing project.el"
   (define-key evil-normal-state-map (kbd "SPC f") #'wnh/rg-project-js))
 
 (use-package magit
-  :ensure t
+  ;; :ensure t
   :config
   (define-key evil-normal-state-map (kbd "SPC g") #'magit-status)
   (add-hook 'git-commit-mode-hook 'flyspell-mode))
@@ -371,7 +376,8 @@ the file, otherwise find the file useing project.el"
   )
 
 (use-package org-ql
-  :ensure t)
+  ;; :ensure t
+)
 
 ;;
 ;; FONT STUFF
@@ -388,7 +394,7 @@ the file, otherwise find the file useing project.el"
 
 
 (use-package eglot
-  :ensure t
+  ;; :ensure t
   :config
   (setq eldoc-idle-delay 5)
   (setq eglot-stay-out-of '(company))
@@ -442,12 +448,12 @@ it onto the kill ring"
     (kbd "SPC h") #'wnh/copy-location))
 
 (use-package clojure-mode
-  :ensure t
+  ;; :ensure t
   :config
   (setq clojure-toplevel-inside-comment-form t))
 
 (use-package cider
-  :ensure t
+  ;; :ensure t
   :config
   (evil-define-key 'normal cider-repl-mode-map
     (kbd "SPC c") #'cider-repl-clear-buffer)
@@ -455,25 +461,28 @@ it onto the kill ring"
     (kbd "C-e") #'cider-eval-defun-at-point))
 
 (use-package inf-clojure
-  :ensure t
+  ;; :ensure t
   :config
   (evil-define-key 'normal inf-clojure-minor-mode-map
     (kbd "C-e") #'inf-clojure-eval-defun))
 
 (use-package go-mode
-  :ensure t
+  ;; :ensure t
   :config
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 
 (use-package restclient
-  :ensure t)
+  ;; :ensure t
+)
 
 (use-package yaml-mode
-  :ensure t)
+  ;; :ensure t
+)
 
 (use-package olivetti
-  :ensure t)
+  ;; :ensure t
+)
 
 (defun wnh/async-shell-region (start end)
   "execute region in an inferior shell"
@@ -493,7 +502,7 @@ it onto the kill ring"
   (find-file "~/.emacs.d/init.el"))
 
 (use-package rust-mode
-  :ensure t
+  ;; :ensure t
   :after (eglot)
   :config
   ;; Use the rust-analyzer that rustup has installed
@@ -501,7 +510,7 @@ it onto the kill ring"
 
 
 (use-package markdown-mode
-  :ensure t
+  ;; :ensure t
   :config
   (add-hook 'markdown-mode #'flyspell-mode)
   (add-hook 'markdown-mode #'auto-fill-mode))
@@ -549,26 +558,27 @@ it onto the kill ring"
 
 (use-package dumb-jump
   ; :load-path "pkg-custom/dumb-jump"
-  :ensure t
+  ;; :ensure t
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;; TODO: Get SQL Working better: https://www.youtube.com/watch?v=D97vDu_BhwA
 (use-package sql-indent
-  :ensure t)
+  ;; :ensure t
+)
 (add-hook 'sql-mode-hook
 	  (lambda ()
 	    (setq show-trailing-whitespace t)))
 
 (use-package typescript-mode
-  :ensure t
+  ;; :ensure t
   :config
   (setq typescript-expr-indent-offset 2)
   (setq typescript-indent-level 2))
 
 ;; has support support for jsx/tsx files
 (use-package web-mode
-  :ensure t
+  ;; :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (setq web-mode-markup-indent-offset 2)
@@ -576,7 +586,7 @@ it onto the kill ring"
   (setq web-mode-css-indent-offset 2))
 
 (use-package nodejs-repl
-  :ensure t
+  ;; :ensure t
   :config
   (evil-define-key 'normal js-mode-map (kbd "C-e") #'nodejs-repl-send-line)
   (evil-define-key 'visual js-mode-map (kbd "C-e") #'nodejs-repl-send-region))
@@ -661,22 +671,35 @@ it onto the kill ring"
   (setq rcirc-authinfo '(("irc.libera.chat" nickserv "wnh" wnh/libera-chat-password)))
   )
 
-(use-package add-node-modules-path :ensure t)
-(use-package dash :ensure t)
-(use-package exec-path-from-shell :ensure t)
-(use-package go-mode :ensure t)
-(use-package lua-mode :ensure t)
-(use-package nix-mode :ensure t)
-(use-package ob-http  :ensure t)
-(use-package olivetti :ensure t)
-(use-package prettier-js :ensure t)
-(use-package restclient :ensure t)
-(use-package swift-mode :ensure t)
-(use-package treemacs :ensure t)
-(use-package yaml-mode :ensure t)
+(use-package add-node-modules-path ;; :ensure t
+)
+(use-package dash ;; :ensure t
+)
+(use-package exec-path-from-shell ;; :ensure t
+)
+(use-package go-mode ;; :ensure t
+)
+(use-package lua-mode ;; :ensure t
+)
+(use-package nix-mode ;; :ensure t
+)
+(use-package ob-http  ;; :ensure t
+)
+(use-package olivetti ;; :ensure t
+)
+(use-package prettier-js ;; :ensure t
+)
+(use-package restclient ;; :ensure t
+)
+(use-package swift-mode ;; :ensure t
+)
+(use-package treemacs ;; :ensure t
+)
+(use-package yaml-mode ;; :ensure t
+)
 
 (use-package notmuch
-  :ensure t
+  ;; :ensure t
   :init
   (setq send-mail-function #'sendmail-send-it)
   (setq sendmail-program "gmail-send")
@@ -706,7 +729,8 @@ it onto the kill ring"
     (kbd "SPC a")  #'wnh/notmuch-archive))
 
 (use-package rc-mode
-  :ensure t)
+  ;; :ensure t
+)
 
 
 
@@ -806,7 +830,7 @@ it onto the kill ring"
 (setq notmuch-search-oldest-first nil)
 
 (use-package elfeed
-  :ensure t
+  ;; :ensure t
   :config
   (setq elfeed-feeds
 	'(("http://nullprogram.com/feed/" software)
@@ -815,12 +839,16 @@ it onto the kill ring"
 	  ("https://joshondesign.com/feed" software design))))
 
 (use-package notmuch
-  :ensure t)
+  ;; :ensure t
+)
 
 (use-package scala-mode
-  :ensure t)
+  ;; :ensure t
+)
 
 (use-package tuareg
-  :ensure t)
+  ;; :ensure t
+)
 (use-package reason-mode
-  :ensure t)
+  ;; :ensure t
+)
