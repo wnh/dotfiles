@@ -1,0 +1,8 @@
+logger "WNH: FROM .xprofile"
+xbindkeys
+dropbox start &
+sh bin/status.sh &
+( sleep 10; redshift -l '50.998056:-118.195556' -m drm & ) &
+
+# Unset the emoji picker thing
+gsettings set org.freedesktop.ibus.panel.emoji hotkey "[]" 
